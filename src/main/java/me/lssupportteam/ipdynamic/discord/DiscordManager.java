@@ -61,6 +61,35 @@ public class DiscordManager {
             .build();
     }
 
+    /**
+     * Check if Discord configuration is valid and should be initialized
+     */
+    public static boolean shouldInitialize(IPDynamic plugin) {
+        try {
+            FileConfiguration discordConfig = plugin.getAddonsManager().getAddonConfig("discord");
+            if (discordConfig == null) {
+                return false;
+            }
+
+            boolean enabled = discordConfig.getBoolean("enabled", false);
+            if (!enabled) {
+                return false;
+            }
+
+            String botToken = discordConfig.getString("bot.token", "YOUR_BOT_TOKEN_HERE");
+            String guildId = discordConfig.getString("server.guild-id", "YOUR_GUILD_ID_HERE");
+
+            // Don't initialize if using default values
+            if (botToken.equals("YOUR_BOT_TOKEN_HERE") || guildId.equals("YOUR_GUILD_ID_HERE")) {
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void initialize() {
         plugin.getLogger().info("🔄 Inicializando DiscordManager...");
 
@@ -121,17 +150,21 @@ public class DiscordManager {
         plugin.getLogger().info("🔍 Validando configuración Discord...");
 
         if (botToken == null || botToken.isEmpty() || botToken.equals("YOUR_BOT_TOKEN_HERE")) {
-            plugin.getLogger().warning("❌ Token de bot inválido o no configurado en addons/discord.yml");
-            plugin.getLogger().warning("   Configura 'bot.token' con tu token de Discord Bot");
+            plugin.getLogger().info("⚠️ Discord Bot no configurado (token por defecto detectado)");
+            plugin.getLogger().info("   Para habilitar Discord: configura 'bot.token' en addons/discord.yml");
             return false;
         }
 
         if (guildId == null || guildId.isEmpty() || guildId.equals("YOUR_GUILD_ID_HERE")) {
-            plugin.getLogger().warning("❌ Guild ID inválido o no configurado en addons/discord.yml");
-            plugin.getLogger().warning("   Configura 'server.guild-id' con el ID de tu servidor Discord");
+            plugin.getLogger().info("⚠️ Discord Bot no configurado (guild-id por defecto detectado)");
+            plugin.getLogger().info("   Para habilitar Discord: configura 'server.guild-id' en addons/discord.yml");
             return false;
         }
 
+        // Check for logs channel ID if it's still default
+        if (logsChannelId != null && logsChannelId.equals("YOUR_LOGS_CHANNEL_ID_HERE")) {
+            plugin.getLogger().info("⚠️ Canal de logs no configurado, Discord funcionará sin notificaciones");
+        }
 
         // Validate token format (basic check)
         if (!botToken.matches("^[A-Za-z0-9._-]+$")) {
@@ -440,15 +473,29 @@ public class DiscordManager {
             return;
         }
 
+        // Check if Discord is enabled
+        if (!enabled) {
+            logDebug("Discord Bot deshabilitado, omitiendo conexión", Level.INFO);
+            connected = false;
+            return;
+        }
+
+        // Validate configuration before attempting any connection
+        if (!validateConfiguration()) {
+            logDebug("Configuración Discord inválida o no configurada, omitiendo conexión", Level.INFO);
+            connected = false;
+            return;
+        }
+
         // If already connected and config is still valid, just reschedule tasks
-        if (connected && validateConfiguration()) {
+        if (connected) {
             logDebug("🔄 Manteniendo conexión existente, solo actualizando configuración", Level.INFO);
             startHeartbeat();
             scheduleStatsUpdate();
             return;
         }
 
-        // Otherwise, do a full reconnect
+        // Otherwise, do a full reconnect only if config is valid
         logDebug("🔄 Reconectando Discord Bot...", Level.INFO);
         connected = false;
         reconnectAttempts = 0;

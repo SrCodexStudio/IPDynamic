@@ -153,8 +153,19 @@ public final class IPDynamic extends JavaPlugin {
 
         webhookService = new WebhookService(this);
 
-        discordManager = new DiscordManager(this);
-        discordManager.initialize();
+        // Initialize Discord Manager only if properly configured
+        if (DiscordManager.shouldInitialize(this)) {
+            try {
+                discordManager = new DiscordManager(this);
+                discordManager.initialize();
+            } catch (Exception e) {
+                getLogger().warning("⚠️ Discord Manager no se pudo inicializar: " + e.getMessage());
+                discordManager = null;
+            }
+        } else {
+            getLogger().info("⚠️ Discord Bot no configurado - omitiendo inicialización");
+            discordManager = null;
+        }
 
         String geoIpProvider = configManager.getGeoIpProvider().toLowerCase();
         if ("ip-api.com".equals(geoIpProvider)) {
@@ -243,8 +254,29 @@ public final class IPDynamic extends JavaPlugin {
 
         loadAllData();
 
-        if (discordManager != null) {
-            discordManager.reload();
+        // Handle Discord Manager reload or initialization
+        if (DiscordManager.shouldInitialize(this)) {
+            if (discordManager != null) {
+                // Reload existing manager
+                discordManager.reload();
+            } else {
+                // Create new manager if it wasn't created before
+                try {
+                    discordManager = new DiscordManager(this);
+                    discordManager.initialize();
+                    getLogger().info("✅ Discord Manager inicializado tras configuración válida");
+                } catch (Exception e) {
+                    getLogger().warning("⚠️ Discord Manager no se pudo inicializar: " + e.getMessage());
+                    discordManager = null;
+                }
+            }
+        } else {
+            // Shutdown Discord if configuration is no longer valid
+            if (discordManager != null) {
+                getLogger().info("⚠️ Discord configuración inválida - cerrando conexión");
+                discordManager.shutdown();
+                discordManager = null;
+            }
         }
 
 
