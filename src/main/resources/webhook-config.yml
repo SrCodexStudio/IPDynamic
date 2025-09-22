@@ -1,0 +1,183 @@
+# ════════════════════════════════════════════════════════════════════════════════
+#                     IPDynamic 2.5-OMEGA - Webhook Configuration
+# ════════════════════════════════════════════════════════════════════════════════
+# Configuration for Discord and other webhook service integration
+#
+# To get a webhook URL in Discord:
+# 1. Go to Server Settings → Integrations → Webhooks
+# 2. Create a new webhook
+# 3. Copy the webhook URL and paste it below
+#
+# To configure the Discord Bot:
+# 1. Go to https://discord.com/developers/applications
+# 2. Create a new application or select an existing one
+# 3. Go to the "Bot" section and copy the token
+# 4. Configure the token below and channel IDs
+# ════════════════════════════════════════════════════════════════════════════════
+
+# Version information (do not modify)
+version: "2.5-OMEGA"
+schema-version: "1.0"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                             MAIN CONFIGURATION                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+webhooks:
+  # Enable webhook system
+  enabled: false
+
+  # Timeout for webhook connections in seconds
+  timeout: 10
+
+  # Number of retry attempts in case of failure
+  retry-attempts: 3
+
+  # Delay between retry attempts in seconds
+  retry-delay: 5
+
+  # Webhook URLs (leave empty to disable)
+  urls:
+    # Webhook for connection notifications
+    connection: ""
+
+    # Webhook for alt detection
+    alt-detection: ""
+
+    # Webhook for bans and unbans
+    ban: ""
+
+    # Webhook for administrator logins
+    admin: ""
+
+    # Webhook for custom notifications
+    custom: ""
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                          NOTIFICATION CONFIGURATION                           ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+notifications:
+  # Connection notifications
+  connection:
+    enabled: true
+    # Only notify on first join
+    first-join-only: false
+    # Include geolocation information
+    include-geo: true
+    # Include possible alts information
+    include-alts: true
+    # Include IP history
+    include-history: true
+    # Maximum history entries to show
+    max-history-entries: 10
+
+  # Alt detection notifications
+  alt-detection:
+    enabled: true
+    # Minimum alts to notify
+    min-alts: 1
+    # Maximum alts to show in notification
+    max-alts-display: 10
+    # Include shared IPs
+    include-shared-ips: true
+    # Cooldown between notifications for same player (seconds)
+    cooldown: 300
+
+  # Ban notifications
+  ban:
+    enabled: true
+    # Include statistics in notifications
+    include-stats: true
+    # Notify OP1 bans
+    notify-op1: true
+    # Notify OP2 bans
+    notify-op2: true
+    # Notify individual bans
+    notify-single: true
+
+  # Administrator notifications
+  admin:
+    enabled: false
+    # Include location information
+    include-location: true
+    # Include connection history
+    include-history: false
+    # Only notify suspicious connections
+    only-suspicious: false
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            EMBED CUSTOMIZATION                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+embeds:
+  # Username for the webhook
+  username: "IPDynamic 2.5-OMEGA"
+
+  # Avatar URL for the webhook
+  avatar-url: "https://mc-heads.net/avatar/MHF_Exclamation/100"
+
+  # Footer text
+  footer-text: "IPDynamic Security System"
+
+  # Include timestamp in embeds
+  timestamp: true
+
+  # Include player thumbnails
+  thumbnails: true
+
+  # Embed colors (in hexadecimal)
+  colors:
+    success: 0x00FF00    # Green
+    warning: 0xFFAA00    # Orange
+    danger: 0xFF0000     # Red
+    info: 0x00AAFF       # Light blue
+    premium: 0x9B59B6    # Purple
+    alt: 0xE74C3C        # Soft red
+    ban: 0xE67E22        # Dark orange
+    unban: 0x2ECC71      # Emerald green
+    admin: 0xF39C12      # Golden yellow
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               FILTERS & RULES                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+filters:
+  # Ignore local IPs (127.0.0.1, 192.168.x.x, etc.)
+  ignore-local-ips: true
+
+  # Ignore whitelisted players
+  ignore-whitelist: true
+
+  # List of IPs that will NOT send webhooks
+  ip-whitelist: []
+
+  # List of IPs that will ALWAYS send webhooks
+  ip-blacklist: []
+
+  # List of countries that will NOT send webhooks (2-letter ISO codes)
+  country-whitelist: []
+
+  # List of countries that will ALWAYS send webhooks
+  country-blacklist: []
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                             ADVANCED CONFIGURATION                            ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+advanced:
+  # Enable webhook queue
+  queue-enabled: true
+
+  # Maximum queue size
+  queue-max-size: 1000
+
+  # Rate limit
+  rate-limit:
+    enabled: true
+    # Maximum requests per minute
+    requests-per-minute: 30
+
+  # Batch similar notifications
+  batch-notifications: false
+
+  # Batch size for grouping
+  batch-size: 5
+
+  # Delay before sending batch (seconds)
+  batch-delay: 10

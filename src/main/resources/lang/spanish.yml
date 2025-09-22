@@ -1,0 +1,468 @@
+# ════════════════════════════════════════════════════════════════════════════════
+#                       IPDynamic 2.5-OMEGA - Idioma Español
+# ════════════════════════════════════════════════════════════════════════════════
+
+# Información de versión (no modificar)
+version: "2.5-OMEGA"
+schema-version: "1.0"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              MENSAJES GENERALES                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+prefix: "&8[&bIPDynamic&8]"
+no-permission: "&cNo tienes permisos para usar este comando."
+player-not-found: "&cJugador no encontrado en la base de datos."
+invalid-ip: "&cFormato de IP inválido."
+reload-success: "&a✅ ¡Plugin recargado exitosamente!"
+command-cooldown: "&cDebes esperar &e{time} &csegundos antes de usar otro comando."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               SISTEMA DE BANS                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+ban:
+  success: "&a✅ Ban aplicado exitosamente!"
+  success-detailed: |
+    &a✅ Ban {type} aplicado exitosamente!
+    &7Patrón: &f{pattern}
+    &7IPs afectadas: &e{count:,}
+    &7Razón: &f{reason}
+  already-banned: "&cEsta IP/patrón ya está baneada."
+  invalid-type: "&cTipo de ban inválido. Usa: &eop1 &co &eop2"
+  invalid-pattern: "&cPatrón de IP inválido para el tipo {type}."
+  reason-default: "Comportamiento sospechoso"
+  processing: "&e⏳ Aplicando ban {type} para patrón &f{pattern}&e..."
+  op2-warning: "&6⚠️ Los bans OP2 se procesan progresivamente para evitar lag del servidor."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              SISTEMA DE UNBANS                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+unban:
+  success: "&a✅ Unban aplicado exitosamente!"
+  success-detailed: |
+    &a✅ Unban {type} aplicado exitosamente!
+    &7Patrón: &f{pattern}
+    &7IPs liberadas: &e{count:,}
+  not-banned: "&cEsta IP/patrón no está baneada."
+  processing: "&e⏳ Aplicando unban {type} para patrón &f{pattern}&e..."
+  progressive: "&e⏳ Procesando unban, esto puede tomar unos minutos..."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                             MENSAJES DE EXPULSIÓN                             ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+kick:
+  banned-ip: |
+    &c&l⛔ IPDynamic Security System ⛔
+
+    &fTu dirección IP ha sido baneada del servidor
+    &7Razón: &e{reason}
+
+    &7Si crees que esto es un error,
+    &7contacta con un administrador.
+
+    &6@Tu Servidor
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                           DETECCIÓN DE ALTS                                   ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+alts:
+  no-alts-found: "&a✅ No se encontraron cuentas alternativas."
+  found: "&e🔍 Se encontraron &c{count} &eposibles alts para &f{player}&e:"
+  detection: "&c[⚠] &6{player} &ftiene &c{count} &fposibles cuentas alternativas."
+  list-entry: "&e• {username} &7- Última vez: {date}"
+  and-more: "&7... y {count} más"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                          INFORMACIÓN DE JUGADORES                             ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+info:
+  player-title: "&b📊 Información de &f{player}&b:"
+  first-login: "&7Primera conexión: &f{date}"
+  last-login: "&7Última conexión: &f{date}"
+  total-connections: "&7Conexiones totales: &f{count}"
+  current-ip: "&7IP actual: &f{ip}"
+  ip-history: "&7Historial de IPs: &f{count}"
+  location: "&7Ubicación: &f{location}"
+  uuid: "&7UUID: &f{uuid}"
+  admin-status: "&7Estado: &6⭐ Administrador"
+  regular-status: "&7Estado: &aNormal"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               ESTADÍSTICAS                                    ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+stats:
+  title: "&b📊 Estadísticas de IPDynamic:"
+  section-bans: "&e🚫 Sistema de Bans:"
+  section-players: "&a👥 Datos de Jugadores:"
+  total-players: "&7Jugadores totales: &f{count}"
+  unique-ips: "&7IPs únicas: &f{count}"
+  single-bans: "&7Bans simples: &f{count}"
+  op1-bans: "&7Bans OP1: &f{count}"
+  op2-bans: "&7Bans OP2: &f{count}"
+  cached-ips: "&7IPs en cache: &f{count}"
+  connection-history: "&7Historial de conexiones: &f{count}"
+  detected-alts: "&7Alts detectadas: &f{count}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                         NOTIFICACIONES EN EL JUEGO                            ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+notify:
+  first-join: "&a[&b+&a] &e{player} &fse conectó por primera vez desde &e{ip}"
+  reconnection: "&a[&b+&a] &e{player} &fse reconectó desde &e{ip}"
+  multiple-ips: "&a[&b+&a] &e{player} &fse conectó desde &e{ip} &7(tiene {count} IPs registradas)"
+  admin-login: "&6[&e👑&6] &eAdmin &6{player} &fse conectó desde &e{ip}"
+  suspicious-ip: "&c[&e⚠&c] &6{player} &fse conectó desde una IP sospechosa: &e{ip}"
+  proxy-detected: "&c[&e🛡&c] &6{player} &fusa un proxy/VPN: &e{ip}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              MENÚ DE AYUDA                                    ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+help:
+  title: "&b✨ IPDynamic 2.5-OMEGA - Ayuda ✨"
+  header: "Comandos disponibles:"
+  ban-op1: "&e/ipdy ban op1 <IP> [razón] &7- Ban OP1 (256 IPs)"
+  ban-op2: "&e/ipdy ban op2 <IP> [razón] &7- Ban OP2 (65,536 IPs)"
+  unban-op1: "&e/ipdy unban op1 <IP> &7- Unban OP1"
+  unban-op2: "&e/ipdy unban op2 <IP> &7- Unban OP2"
+  alts: "&e/ipdy alts <jugador> &7- Ver alts de un jugador"
+  info: "&e/ipdy info <jugador> &7- Información detallada de jugador"
+  whitelist: "&e/ipdy whitelist <add|remove|list> [jugador] &7- Gestionar whitelist"
+  stats: "&e/ipdy stats &7- Estadísticas del plugin"
+  reload: "&e/ipdy reload &7- Recargar plugin"
+  version: "&e/ipdy version &7- Versión del plugin"
+  tip: "&6💡 Tip: &fUsa &e/ipdy info <jugador> &fpara ver información detallada y posibles alts."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            COMANDOS ESPECÍFICOS                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+commands:
+  usage:
+    ban: "&cUso: &e/ipdy ban <op1|op2> <IP/Patrón> [razón]"
+    unban: "&cUso: &e/ipdy unban <op1|op2> <IP/Patrón>"
+    alts: "&cUso: &e/ipdy alts <jugador>"
+    info: "&cUso: &e/ipdy info <jugador>"
+  examples:
+    ban-op1: "&7Ejemplo: /ipdy ban op1 127.0.0.* Spam"
+    ban-op2: "&7Ejemplo: /ipdy ban op2 192.168.*.* Hack"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                             MENSAJES DE WEBHOOK                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+webhook:
+  connection:
+    title: "🔗 Nueva Conexión"
+    first-join: "✨ Primera Conexión"
+    description: "Un jugador se ha conectado al servidor"
+  alt:
+    title: "🔍 Posibles Alts Detectados"
+    description: "Se han detectado posibles cuentas alternativas"
+  ban:
+    title: "⛔ Ban de IP Aplicado"
+    description: "Se ha aplicado un ban dinámico"
+  unban:
+    title: "✅ Unban de IP Aplicado"
+    description: "Se ha removido un ban dinámico"
+  admin:
+    title: "👑 Conexión de Administrador"
+    description: "Un administrador ha iniciado sesión"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              MENSAJES DE ERROR                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+errors:
+  unknown-command: "&cComando desconocido. Usa &e/ipdy help &cpara ver los comandos disponibles."
+  internal-error: "&c❌ Error interno del plugin. Revisa la consola para más detalles."
+  database-error: "&c❌ Error de base de datos. Contacta con un administrador."
+  network-error: "&c❌ Error de red. Inténtalo de nuevo más tarde."
+  permission-denied: "&c❌ No tienes permisos suficientes para esta acción."
+  unexpected-error: "&c❌ Error inesperado: {error}"
+  applying-ban: "&c❌ Error aplicando ban: {error}"
+  applying-unban: "&c❌ Error aplicando unban: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            MENSAJES DEL SISTEMA                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+system:
+  plugin-enabled: "&a✓ IPDynamic 2.5-OMEGA habilitado exitosamente!"
+  plugin-disabled: "IPDynamic 2.5-OMEGA deshabilitado."
+  plugin-reloaded: "IPDynamic recargado correctamente!"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            SISTEMA DE MIGRACIÓN                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+migration:
+  starting: "&e🔄 Verificando actualizaciones de configuración..."
+  completed: "&a✅ Migración de configuraciones completada"
+  backup-created: "&e💾 Backup creado: {file}"
+  config-updated: "&a✅ {file} actualizado con nuevas opciones"
+  new-option-found: "&e🆕 Nueva opción encontrada: {option}"
+  no-updates: "&a✅ Todas las configuraciones están actualizadas"
+  reloading: "&e🔄 Recargando IPDynamic..."
+  version-unsupported-header: "═══════════════════════════════════════════"
+  version-unsupported-title: " IPDynamic 2.5-OMEGA - VERSION NO SOPORTADA"
+  version-detected: " Versión detectada: {version}"
+  version-supported: " Versiones soportadas: 1.13 - 1.21.8"
+  data-loaded: "Todos los datos cargados correctamente."
+  data-saved: "Todos los datos guardados automáticamente."
+  wait-command: "&cDebes esperar antes de usar otro comando."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                          MENSAJES DE CONFIGURACIÓN                            ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+config:
+  loaded: "Configuración cargada correctamente."
+  created: "Archivo de configuración creado con valores por defecto."
+  updated: "Configuración actualizada con nuevos valores."
+  save-error: "Error guardando configuración: {error}"
+  create-error: "Error creando archivo de configuración por defecto: {error}"
+  update-error: "Error actualizando configuración: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                         MENSAJES DE WEBHOOK CONFIG                            ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+webhook-config:
+  loaded: "Configuración de webhooks cargada correctamente."
+  created: "Archivo de configuración de webhooks creado con valores por defecto."
+  updated: "Configuración de webhooks actualizada con nuevos valores."
+  save-error: "Error guardando configuración de webhooks: {error}"
+  create-error: "Error creando archivo de configuración de webhooks: {error}"
+  update-error: "Error actualizando configuración de webhooks: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            MENSAJES DE IDIOMA                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+language:
+  loaded: "Idioma cargado: {lang}"
+  created: "Archivo de idioma creado: {file}"
+  create-error: "Error creando archivo de idioma: {error}"
+  save-error: "Error guardando archivo de idioma: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                           MENSAJES DE WHITELIST                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+whitelist:
+  loaded: "Cargados {count} jugadores en la whitelist."
+  empty: "No se encontró whitelist existente. Empezando con lista vacía."
+  player-added: "Jugador añadido a whitelist: {player}"
+  player-removed: "Jugador removido de whitelist: {player}"
+  cleared: "Whitelist limpiada."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                         MENSAJES DE MANEJO DE DATOS                           ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+data:
+  loaded: "Cargados {players} jugadores, {ips} IPs únicas, {connections} conexiones."
+  player-registered: "Nuevo jugador registrado: {player} desde {ip}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            MENSAJES DE BANS                                   ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+bans:
+  loaded: "Cargados {single} bans simples, {op1} bans OP1, {op2} bans OP2."
+  ip-banned: "IP baneada: {ip} por {banner}"
+  op1-applied: "OP1 ban aplicado: {pattern} ({count} IPs) por {banner}"
+  op2-scheduled: "OP2 ban programado: {pattern} ({count} IPs) por {banner}"
+  op2-completed: "OP2 ban completado: {pattern}"
+  op2-progress: "OP2 ban en progreso: {pattern} ({count} IPs procesadas)"
+  unban-completed: "Unban completado: {pattern}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                          MENSAJES DE CONEXIONES                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+connection:
+  blocked: "Conexión bloqueada: {player} ({ip}) - IP baneada: {reason}"
+  attempt: "Intento de conexión: {player} desde {ip}"
+  processing-error: "Error procesando conexión de {player}: {error}"
+  disconnect-error: "Error procesando desconexión de {player}: {error}"
+  alt-detected: "Posibles alts detectados para {player} desde {ip}: {alts}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            MENSAJES DE GEOIP                                  ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+geoip:
+  rate-limit: "Rate limit alcanzado para GeoIP. Intentando más tarde..."
+  api-error: "GeoIP API respondió con código: {code}"
+  api-message: "GeoIP API error: {message}"
+  location-found: "Ubicación encontrada para {ip}: {country}, {city}"
+  cache-cleared: "Cache de GeoIP limpiado."
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                           MENSAJES DE WEBHOOK                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+webhook-service:
+  response-code: "Webhook respondió con código: {code}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                           MENSAJES DE COMANDOS                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+command:
+  ban-success-detailed: |
+    &a✅ Ban {type} aplicado exitosamente!
+    &7Patrón: &f{pattern}
+    &7IPs afectadas: &e{count:,}
+    &7Razón: &f{reason}
+  unban-success-detailed: |
+    &a✅ Unban {type} aplicado exitosamente!
+    &7Patrón: &f{pattern}
+    &7IPs liberadas: &e{count:,}
+  ban-processing: "&e⏳ Aplicando ban {type} para patrón &f{pattern}&e..."
+  unban-processing: "&e⏳ Aplicando unban {type} para patrón &f{pattern}&e..."
+  invalid-ban-type: "&cTipo de ban inválido. Usa: &eop1 &co &eop2"
+  invalid-unban-type: "&cTipo de unban inválido. Usa: &eop1 &co &eop2"
+  invalid-pattern: "&cPatrón de IP inválido para el tipo {type}"
+  alts-not-found: "&c❌ No se encontraron cuentas alternativas."
+  player-not-found-db: "&c❌ Jugador no encontrado en la base de datos."
+  ban-usage: "&cUso: &e/ipdy ban <op1|op2> <IP/Patrón> [razón]"
+  unban-usage: "&cUso: &e/ipdy unban <op1|op2> <IP/Patrón>"
+  alts-usage: "&cUso: &e/ipdy alts <jugador>"
+  info-usage: "&cUso: &e/ipdy info <jugador>"
+  ban-examples: "&7Ejemplos:"
+  ban-example1: "&7  /ipdy ban op1 127.0.0.* Spam"
+  ban-example2: "&7  /ipdy ban op2 192.168.*.* Hack"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                                MENÚS ASCII ART                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+menus:
+  help:
+    lines:
+      - ""
+      - "&b      ╭─────────────── &fIPDynamic 2.5-OMEGA &b───────────────╮"
+      - "&b      │                                                   "
+      - "&b      │  &e• &f/ipdy help           &7➜  &aMostrar este menú      "
+      - "&b      │  &e• &f/ipdy alts &6<jugador> &7➜  &aVer cuentas alternas   "
+      - "&b      │  &e• &f/ipdy info &6<jugador> &7➜  &aInformación detallada  "
+      - "&b      │  &e• &f/ipdy ban op1 &6<ip>   &7➜  &aBanear rango /24       "
+      - "&b      │  &e• &f/ipdy ban op2 &6<ip>   &7➜  &aBanear rango /16       "
+      - "&b      │  &e• &f/ipdy unban &6<tipo>   &7➜  &aRemover baneo          "
+      - "&b      │  &e• &f/ipdy whitelist &6<cmd> &7➜  &aGestionar whitelist    "
+      - "&b      │  &e• &f/ipdy stats          &7➜  &aVer estadísticas      "
+      - "&b      │  &e• &f/ipdy reload         &7➜  &aRecargar plugin        "
+      - "&b      │  &e• &f/ipdy version        &7➜  &aInformación de versión "
+      - "&b      │                                                   "
+      - "&b      ╰───────────────────────────────────────────────────╯"
+      - ""
+
+
+  alts:
+    header:
+      - ""
+      - "&c      ╭────────────── &fCuentas Alternativas &c───────────────╮"
+      - "&c      │                                                   "
+    player-info:
+      - "&c      │  &e➣ &fJugador: &a{player}                               "
+      - "&c      │  &e➣ &fConexiones: &e{connections} &7• &fÚltima: &e{last}          "
+      - "&c      │                                                   "
+    alt-entry: "&c      │  &e• &f{name}     &7➜  &e{connections} conexiones  &7IP: {ip} "
+    no-alts: "&c      │  &7➜ No se encontraron cuentas alternativas        "
+    total: "&c      │  &7➜ Total de alts encontradas: &e{count}                  "
+    footer:
+      - "&c      │                                                   "
+      - "&c      ╰───────────────────────────────────────────────────╯"
+      - ""
+
+
+  info:
+    header:
+      - ""
+      - "&9      ╭──────────── &fInformación del Jugador &9─────────────╮"
+      - "&9      │                                                   "
+    player-data:
+      - "&9      │  &e➣ &fJugador: &a{player}                               "
+      - "&9      │  &e➣ &fUUID: &7{uuid}    "
+      - "&9      │  &e➣ &fConexiones Totales: &e{connections}                       "
+      - "&9      │  &e➣ &fPrimera Conexión: &e{first_join}            "
+      - "&9      │  &e➣ &fÚltima Conexión: &e{last_join}             "
+      - "&9      │  &e➣ &fIP Actual: &e{current_ip}                      "
+      - "&9      │  &e➣ &fPaís: &e{country} {flag}                              "
+      - "&9      │  &e➣ &fEs Admin: {admin_status}                                "
+      - "&9      │                                                   "
+      - "&9      │  &e• &fHistorial de IPs: &e{ip_count} direcciones               "
+      - "&9      │  &e• &fCuentas Alternas: &e{alt_count} detectadas                "
+    footer:
+      - "&9      │                                                   "
+      - "&9      ╰───────────────────────────────────────────────────╯"
+      - ""
+
+
+  stats:
+    header:
+      - ""
+      - "&d      ╭─────────────── &fEstadísticas IPDynamic &d───────────────╮"
+      - "&d      │                                                   "
+    data-section:
+      - "&d      │  &e➣ &fJugadores Registrados: &a{total_players}                    "
+      - "&d      │  &e➣ &fIPs Únicas: &a{unique_ips}                           "
+      - "&d      │  &e➣ &fConexiones Activas: &a{active_connections}                     "
+      - "&d      │  &e➣ &fHistorial de Conexiones: &a{connection_history}                "
+      - "&d      │  &e➣ &fLogins de Admins: &a{admin_logins}                      "
+      - "&d      │  &e➣ &fAlts Detectadas: &a{detected_alts}                        "
+      - "&d      │                                                   "
+    ban-section:
+      - "&d      │  &e• &fBans Individuales: &e{single_bans}                       "
+      - "&d      │  &e• &fBans OP1: &e{op1_bans}                             "
+      - "&d      │  &e• &fBans OP2: &e{op2_bans}                             "
+      - "&d      │  &e• &fBans Pendientes: &e{pending_bans}                      "
+    footer:
+      - "&d      │                                                   "
+      - "&d      ╰───────────────────────────────────────────────────╯"
+      - ""
+
+
+  version:
+    lines:
+      - ""
+      - "&5      ╭─────────────── &fIPDynamic 2.5-OMEGA &5───────────────╮"
+      - "&5      │                                                   "
+      - "&5      │  &e➣ &fVersión: &a2.5-OMEGA                      "
+      - "&5      │  &e➣ &fAutor: &aSrCodex                          "
+      - "&5      │  &e➣ &fServidor: &a{server_version}                          "
+      - "&5      │  &e➣ &fJava: &a{java_version}                         "
+      - "&5      │  &e➣ &fEstado: &a✅ Funcionando correctamente   "
+      - "&5      │                                                   "
+      - "&5      ╰───────────────────────────────────────────────────╯"
+      - ""
+
+
+  whitelist:
+    header:
+      - ""
+      - "&a      ╭──────────────── &fWhitelist de IPDynamic &a────────────────╮"
+      - "&a      │                                                   "
+    player-count:
+      - "&a      │  &e➣ &fJugadores: &e{count}                              "
+      - "&a      │                                                   "
+    player-entry: "&a      │  &e• &f{player}                                        "
+    no-players:
+      - "&a      │  &7➜ No hay jugadores en la whitelist             "
+    description:
+      - "&a      │                                                   "
+      - "&a      │  &7Los jugadores en whitelist pueden conectarse    "
+      - "&a      │  &7incluso si su IP está baneada con OP1/OP2       "
+    footer:
+      - "&a      │                                                   "
+      - "&a      ╰───────────────────────────────────────────────────╯"
+      - ""
+
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                           MENSAJES PARA DISCORD                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+discord-messages:
+  player-info: "ℹ️ Información del Jugador"
+  alt-detection: "🔍 Detección de Cuentas Alternativas"
+  ban-notification: "🔒 Notificación de Baneo"
+  connection-info: "🌐 Nueva Conexión Detectada"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              DISCORD INTEGRATION                              ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+discord:
+  initialized: "&a✅ Discord Bot inicializado correctamente."
+  disabled: "&e⚠️ Discord Bot deshabilitado en la configuración."
+  reloaded: "&a✅ Discord Bot recargado correctamente."
+  invalid-config: "&c❌ Configuración de Discord inválida. Verifica el token y canal."
+  stats-sent: "&a✅ Estadísticas de países enviadas a Discord."
+  error-sending: "&c❌ Error enviando estadísticas a Discord: {error}"
+  connection-failed: "&c❌ Error conectando con Discord API"
+  invalid-channel: "&c❌ Canal de Discord inválido o no existe"
+  bot-offline: "&c❌ Bot de Discord offline o sin permisos"

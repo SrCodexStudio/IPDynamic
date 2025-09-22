@@ -1,0 +1,61 @@
+# =============================================================================
+# IPDynamic 2.5-OMEGA - Discord Bot Configuration
+# =============================================================================
+
+# Version information (do not modify)
+version: "2.5-OMEGA"
+schema-version: "1.0"
+
+# Enable/disable the Discord Bot system
+# If disabled, the bot will not start
+enabled: false
+
+# Bot Configuration
+bot:
+  # Discord bot token
+  # Get your token at: https://discord.com/developers/applications
+  token: "YOUR_BOT_TOKEN_HERE"
+
+  # Bot activity (displayed in Discord)
+  activity: "IPDynamic 2.5-OMEGA"
+
+  # Bot status (ONLINE, IDLE, DND, INVISIBLE)
+  status: "ONLINE"
+
+# Server Configuration
+server:
+  # Discord server ID where the bot will operate
+  guild-id: "YOUR_GUILD_ID_HERE"
+
+  # Channel ID where logs will be sent (optional)
+  logs-channel-id: "YOUR_LOGS_CHANNEL_ID_HERE"
+
+# Connection Configuration
+connection:
+  # Automatic reconnection in case of connection loss
+  auto-reconnect: true
+
+  # Wait time before reconnecting (seconds)
+  reconnect-delay: 5
+
+  # Maximum number of reconnection attempts
+  max-reconnect-attempts: 10
+
+  # Timeout for HTTP operations (seconds)
+  timeout: 30
+
+# Statistics Configuration
+stats:
+  # Edit existing message instead of sending new one (anti-spam)
+  edit-message-enabled: true
+
+# Debug Configuration
+debug:
+  # Enable debug logs
+  enabled: true
+
+  # Logging level (INFO, WARNING, SEVERE)
+  log-level: "INFO"
+
+  # Log all Discord API calls
+  log-api-calls: false

@@ -1,0 +1,190 @@
+name: IPDynamic
+version: ${project.version}
+main: me.lssupportteam.ipdynamic.IPDynamic
+api-version: '1.13'
+author: SrCodex
+description: ${project.description}
+website: https://github.com/SrCodex/IPDynamic
+softdepend: [PlaceholderAPI]
+load: STARTUP
+
+commands:
+  ipdynamic:
+    description: Main command for IPDynamic
+    aliases: [ipdy]
+    usage: /ipdynamic <subcommand> [arguments...]
+    permission: ipdynamic.use
+    permission-message: '&cYou don''t have permission to use this command.'
+
+permissions:
+  ipdynamic.*:
+    description: Full access to all IPDynamic commands
+    default: op
+    children:
+      ipdynamic.use: true
+      ipdynamic.admin: true
+      ipdynamic.reload: true
+      ipdynamic.ban: true
+      ipdynamic.unban: true
+      ipdynamic.whitelist.*: true
+      ipdynamic.alts: true
+      ipdynamic.info: true
+      ipdynamic.stats: true
+      ipdynamic.notify.*: true
+      ipdynamic.bypass.*: true
+
+  ipdynamic.use:
+    description: Base permission to use IPDynamic informational commands
+    default: op
+
+  ipdynamic.admin:
+    description: Access to all IPDynamic administration commands
+    default: op
+    children:
+      ipdynamic.use: true
+      ipdynamic.ban: true
+      ipdynamic.unban: true
+      ipdynamic.reload: true
+      ipdynamic.stats: true
+      ipdynamic.alts: true
+      ipdynamic.info: true
+
+  ipdynamic.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+
+  # Ban permissions
+  ipdynamic.ban:
+    description: Allows banning IPs or IP ranges
+    default: op
+    children:
+      ipdynamic.ban.single: true
+      ipdynamic.ban.op1: true
+      ipdynamic.ban.op2: true
+
+  ipdynamic.ban.single:
+    description: Allows banning individual IPs
+    default: op
+
+  ipdynamic.ban.op1:
+    description: Allows using OP1 bans (256 IPs)
+    default: op
+
+  ipdynamic.ban.op2:
+    description: Allows using OP2 bans (65,536 IPs)
+    default: op
+
+  # Unban permissions
+  ipdynamic.unban:
+    description: Allows unbanning IPs or IP ranges
+    default: op
+    children:
+      ipdynamic.unban.single: true
+      ipdynamic.unban.op1: true
+      ipdynamic.unban.op2: true
+
+  ipdynamic.unban.single:
+    description: Allows unbanning individual IPs
+    default: op
+
+  ipdynamic.unban.op1:
+    description: Allows unbanning OP1 ranges
+    default: op
+
+  ipdynamic.unban.op2:
+    description: Allows unbanning OP2 ranges
+    default: op
+
+  # Whitelist permissions
+  ipdynamic.whitelist.*:
+    description: Full access to IPDynamic whitelist
+    default: op
+    children:
+      ipdynamic.whitelist.add: true
+      ipdynamic.whitelist.remove: true
+      ipdynamic.whitelist.list: true
+
+  ipdynamic.whitelist.add:
+    description: Allows adding players to IPDynamic whitelist
+    default: op
+
+  ipdynamic.whitelist.remove:
+    description: Allows removing players from IPDynamic whitelist
+    default: op
+
+  ipdynamic.whitelist.list:
+    description: Allows listing players in IPDynamic whitelist
+    default: op
+
+  # Information permissions
+  ipdynamic.alts:
+    description: Allows searching for player alt information
+    default: op
+
+  ipdynamic.info:
+    description: Allows viewing detailed player information
+    default: op
+
+  ipdynamic.stats:
+    description: Allows viewing plugin statistics
+    default: op
+
+  ipdynamic.geoip:
+    description: Allows getting geolocation of an IP or player
+    default: op
+
+  # Notification permissions
+  ipdynamic.notify.*:
+    description: Receives all IPDynamic notifications
+    default: op
+    children:
+      ipdynamic.notify.alts: true
+      ipdynamic.notify.connections: true
+      ipdynamic.notify.bans: true
+      ipdynamic.notify.admin: true
+
+  ipdynamic.notify.alts:
+    description: Receives notifications when a possible alt is detected
+    default: op
+
+  ipdynamic.notify.connections:
+    description: Receives notifications of player connections
+    default: op
+
+  ipdynamic.notify.bans:
+    description: Receives notifications of bans and unbans
+    default: op
+
+  ipdynamic.notify.admin:
+    description: Receives notifications of administrator connections
+    default: op
+
+  # Bypass permissions
+  ipdynamic.bypass.*:
+    description: Bypasses for all IPDynamic restrictions
+    default: op
+    children:
+      ipdynamic.bypass.ban: true
+      ipdynamic.bypass.cooldown: true
+      ipdynamic.bypass.ratelimit: true
+
+  ipdynamic.bypass.ban:
+    description: Immune to all IPDynamic IP bans
+    default: op
+
+  ipdynamic.bypass.cooldown:
+    description: Bypasses command cooldown
+    default: op
+
+  ipdynamic.bypass.ratelimit:
+    description: Bypasses rate limits
+    default: op
+
+  # Special permissions
+  ipdynamic.see.all:
+    description: Can see information of all players
+    default: op
+
+  ipdynamic.debug:
+    description: Access to debug commands and technical information
+    default: op

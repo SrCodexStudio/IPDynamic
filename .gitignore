@@ -1,0 +1,151 @@
+# ════════════════════════════════════════════════════════════════════════════════
+#                         IPDynamic 2.5-OMEGA - Git Ignore
+# ════════════════════════════════════════════════════════════════════════════════
+
+# Claude AI Files
+.claude/
+CLAUDE.md
+CLAUDE.MD
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ProGuard generated files
+proguard_mapping.txt
+proguard_configuration.txt
+*-original.jar
+*-obf.jar
+
+# IDE Files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Test output
+TEST-*.xml
+
+# Local development
+local.properties
+
+# Plugin test servers
+test-server/
+test-servers/
+server/
+servers/
+
+# Backup files
+*.bak
+*.backup
+
+# IDE specific
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Package Files
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# Gradle (if used)
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# IntelliJ IDEA
+out/
+
+# Eclipse
+bin/
+
+# Plugin runtime data (optional - comment out if you want to track these)
+data/
+logs/
+
+# Sensitive configuration files (if they contain tokens/passwords)
+# Uncomment the lines below if you want to exclude config files with sensitive data
+# src/main/resources/addons/discord.yml
+# src/main/resources/webhook-config.yml
+
+# Development and testing files
+*.dev
+*.test
+development/
+testing/
+
+# Node modules (if any)
+node_modules/
+
+# Python files (if any)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Documentation build files
+docs/_build/
+site/
+
+# Coverage reports
+coverage/
+*.cover
+.coverage
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3

@@ -1,0 +1,163 @@
+# ════════════════════════════════════════════════════════════════════════════════
+#                         IPDynamic 2.5-OMEGA - Configuration
+# ════════════════════════════════════════════════════════════════════════════════
+# Advanced plugin to track IPs, detect alts, ban dynamic ranges
+# and geolocate players with optimized performance.
+#
+# Developed by: SrCodex
+# Version: 2.5-OMEGA
+# Compatibility: Minecraft 1.13 - 1.21.8 | Spigot/Paper/Purpur
+# ════════════════════════════════════════════════════════════════════════════════
+
+# Version information (do not modify)
+version: "2.5-OMEGA"
+schema-version: "1.0"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               GENERAL CONFIGURATION                           ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+general:
+  # Plugin language (spanish, english, russian)
+  language: english
+
+  # Debug mode - Shows detailed information in console
+  debug-mode: false
+
+  # Auto-save interval in minutes (0 to disable)
+  autosave-interval: 10
+
+  # Date and time format
+  date-format: "dd/MM/yyyy HH:mm:ss"
+
+  # Timezone
+  timezone: "America/Mexico_City"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              DATA MANAGEMENT                                  ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+data:
+  # Maximum IPs to maintain in history per player
+  max-ip-history: 50
+
+  # Data file names (DO NOT CHANGE unless you know what you're doing)
+  player-data-file: "playerConnections.json"
+  single-bans-file: "single-bans.json"
+  op1-bans-file: "op1-bans.json"
+  op2-bans-file: "op2-bans.json"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            DYNAMIC BAN SYSTEM                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+bans:
+  # Default reason for bans without specified reason
+  default-reason: "Suspicious behavior"
+
+  # Delay in seconds to process OP1 bans (0 = immediate)
+  op1-process-delay: 0
+
+  # Delay in seconds to process OP2 bans (300 = 5 minutes)
+  op2-process-delay: 300
+
+  # Delay in seconds to process unbans (300 = 5 minutes)
+  unban-process-delay: 300
+
+  # Maximum IPs to process per cycle (to avoid lag)
+  max-ips-per-cycle: 1000
+
+  # Kick message for banned IPs
+  kick-message: |
+    &c&l⛔ IPDynamic Security System ⛔
+
+    &fYour IP address has been banned from the server
+    &7Reason: &e{reason}
+
+    &7If you believe this is an error,
+    &7please contact an administrator.
+
+    &8Plugin: IPDynamic 2.5-OMEGA
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                         ALTERNATE ACCOUNT DETECTION                           ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+alt-detection:
+  # Enable automatic alt detection
+  enabled: true
+
+  # Notify administrators when alts are detected
+  notify-admins: true
+
+  # Minimum shared IPs to consider an alt
+  min-shared-ips: 1
+
+  # Ignore local IPs (127.0.0.1, 192.168.x.x, etc.)
+  ignore-local-ips: true
+
+  # Whitelisted players are immune to detection
+  whitelist-immune: true
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               GEOLOCATION                                     ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+geoip:
+  # Enable IP geolocation
+  enabled: true
+
+  # GeoIP provider (currently only "ip-api.com")
+  provider: "ip-api.com"
+
+  # Get geolocation on first login
+  on-first-login: true
+
+  # Cache duration in seconds (3600 = 1 hour)
+  cache-duration: 3600
+
+  # Alert when proxy/VPN is detected
+  alert-on-proxy: true
+
+  # Alert when hosting/datacenter is detected
+  alert-on-hosting: true
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            PERFORMANCE OPTIMIZATION                           ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+performance:
+  # Enable asynchronous processing
+  async-processing: true
+
+  # Thread pool size
+  thread-pool-size: 4
+
+  # Enable memory cache
+  cache-enabled: true
+
+  # Maximum cache size
+  cache-size: 10000
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                          IN-GAME NOTIFICATIONS                                ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+notifications:
+  in-game:
+    # Enable chat notifications
+    enabled: true
+
+    # Notify alt detection
+    alt-detection: true
+
+    # Notify administrator login
+    admin-login: true
+
+    # Notify suspicious activity
+    suspicious-activity: true
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                              COMMANDS & ALIASES                               ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+commands:
+  # Additional aliases for the main command
+  aliases:
+    - "ipd"
+    - "ipdynamic"
+
+  # Cooldown between commands in seconds
+  cooldown: 3

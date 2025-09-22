@@ -1,0 +1,96 @@
+# =============================================================================
+# IPDynamic 2.5-OMEGA - Discord Stats Configuration
+# =============================================================================
+
+# Version information (do not modify)
+version: "2.5-OMEGA"
+schema-version: "1.0"
+
+# Enable the statistics system
+enabled: true
+
+# Auto-Send Configuration
+auto-send:
+  # Enable automatic statistics sending
+  enabled: true
+
+  # Send interval (fixed at 5 minutes for real-time updates)
+  # The bot will send statistics on connect and then every 5 minutes
+  interval: 300
+
+  # Channel ID where to send statistics
+  channel-id: "YOUR_STATS_CHANNEL_ID"
+
+# TOP Countries Configuration
+top-countries:
+  # Enable country statistics
+  enabled: true
+
+  # Number of countries to show in TOP
+  limit: 10
+
+  # Show country flags
+  show-flags: true
+
+  # Show percentages
+  show-percentages: true
+
+# Embed Configuration
+embed:
+  # Embed title (use {limit} for number of countries)
+  title: "➜ Top 10 Most Active Countries"
+
+  # Embed description - Will be shown below the title
+  # Leave empty to not show description
+  description: ""
+
+  # Embed color in hexadecimal format
+  color: "#00FF00"
+
+  # Main content format configuration
+  content:
+    # Separator between countries (optional)
+    separator: ""
+
+  # Footer text
+  footer:
+    text: "IPDynamic ➜ Last update"
+    icon: ""
+
+  # Thumbnail image URL (optional)
+  thumbnail: ""
+
+  # Embed author (optional)
+  author:
+    name: ""
+    url: ""
+    icon: ""
+
+  # Main embed image (optional)
+  image: ""
+
+  # Show timestamp
+  timestamp: true
+
+# Message Templates
+templates:
+  # Template for each country entry
+  # Variables: {medal}, {country}, {flag}, {connections}, {connections:,}, {percentage}
+  country-entry: "{medal} **{country}** {flag} ➜ `{connections:,}` connections (**{percentage}%**)"
+
+  # Message when no data is available
+  no-data: "❌ No data available"
+
+# Medal Configuration
+medals:
+  # Medal for first place
+  first: "🥇"
+
+  # Medal for second place
+  second: "🥈"
+
+  # Medal for third place
+  third: "🥉"
+
+  # Default medal for the rest
+  default: "🔹"
