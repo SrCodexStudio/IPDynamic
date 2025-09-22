@@ -141,6 +141,9 @@ public class BanManager {
         bannedIpCache.add(ip);
         totalBansProcessed++;
 
+        // Save to JSON file immediately
+        JsonUtils.saveData(singleBansFile, new HashMap<>(singleBans), plugin.getLogger());
+
         plugin.getLogger().info(String.format("IP baneada: %s por %s", ip, entry.getBannedBy()));
         return new BanResult(true, "IP baneada exitosamente", 1);
     }
@@ -153,6 +156,8 @@ public class BanManager {
 
         op1Bans.put(pattern, entry);
 
+        // Save to JSON file immediately
+        JsonUtils.saveData(op1BansFile, new HashMap<>(op1Bans), plugin.getLogger());
 
         List<String> ips = IPUtils.generateIpRange(pattern);
         int count = 0;
@@ -183,6 +188,8 @@ public class BanManager {
 
         op2Bans.put(pattern, entry);
 
+        // Save to JSON file immediately
+        JsonUtils.saveData(op2BansFile, new HashMap<>(op2Bans), plugin.getLogger());
 
         pendingOp2Bans.offer(entry);
 
@@ -267,6 +274,9 @@ public class BanManager {
         bannedIpCache.remove(ip);
         totalUnbansProcessed++;
 
+        // Save to JSON file immediately
+        JsonUtils.saveData(singleBansFile, new HashMap<>(singleBans), plugin.getLogger());
+
         return new UnbanResult(true, "IP desbaneada exitosamente", 1);
     }
 
@@ -276,6 +286,8 @@ public class BanManager {
             return new UnbanResult(false, "Patrón OP1 no está baneado");
         }
 
+        // Save to JSON file immediately
+        JsonUtils.saveData(op1BansFile, new HashMap<>(op1Bans), plugin.getLogger());
 
         pendingUnbans.offer(new UnbanRequest(pattern, BanEntry.BanType.OP1));
 
@@ -288,6 +300,8 @@ public class BanManager {
             return new UnbanResult(false, "Patrón OP2 no está baneado");
         }
 
+        // Save to JSON file immediately
+        JsonUtils.saveData(op2BansFile, new HashMap<>(op2Bans), plugin.getLogger());
 
         pendingUnbans.offer(new UnbanRequest(pattern, BanEntry.BanType.OP2));
 

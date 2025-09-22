@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -29,11 +31,59 @@ public class JsonUtils {
             .create();
 
     private static final Map<String, ReadWriteLock> fileLocks = new HashMap<>();
+    private static final SimpleDateFormat BACKUP_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     private static ReadWriteLock getLock(File file) {
         synchronized (fileLocks) {
             return fileLocks.computeIfAbsent(file.getAbsolutePath(), k -> new ReentrantReadWriteLock());
         }
+    }
+
+    /**
+     * Creates the backup directory structure inside data folder
+     */
+    private static File getBackupDir(File dataFile) {
+        File dataDir = dataFile.getParentFile();
+        File backupDir = new File(dataDir, "backup");
+        if (!backupDir.exists()) {
+            backupDir.mkdirs();
+        }
+        return backupDir;
+    }
+
+    /**
+     * Gets the backup file path with timestamp
+     */
+    private static File getBackupFile(File originalFile) {
+        File backupDir = getBackupDir(originalFile);
+        String timestamp = BACKUP_DATE_FORMAT.format(new Date());
+        String backupName = originalFile.getName().replace(".json", "_" + timestamp + ".json");
+        return new File(backupDir, backupName);
+    }
+
+    /**
+     * Gets the latest backup file for restoration
+     */
+    private static File getLatestBackupFile(File originalFile) {
+        File backupDir = getBackupDir(originalFile);
+        String baseName = originalFile.getName().replace(".json", "");
+
+        File[] backupFiles = backupDir.listFiles((dir, name) ->
+            name.startsWith(baseName + "_") && name.endsWith(".json"));
+
+        if (backupFiles == null || backupFiles.length == 0) {
+            return null;
+        }
+
+        // Find the most recent backup
+        File latestBackup = backupFiles[0];
+        for (File backup : backupFiles) {
+            if (backup.lastModified() > latestBackup.lastModified()) {
+                latestBackup = backup;
+            }
+        }
+
+        return latestBackup;
     }
 
     public static <T> T loadData(File file, Type type, Logger logger) {
@@ -61,12 +111,13 @@ public class JsonUtils {
             }
 
 
-            File backup = new File(file.getParentFile(), file.getName() + ".backup");
-            if (backup.exists()) {
+            // Try to restore from latest backup in data/backup folder
+            File latestBackup = getLatestBackupFile(file);
+            if (latestBackup != null && latestBackup.exists()) {
                 try {
-                    Files.copy(backup.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(latestBackup.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     if (logger != null) {
-                        logger.info("Restored " + file.getName() + " from backup");
+                        logger.info("Restored " + file.getName() + " from backup: " + latestBackup.getName());
                     }
                     return loadData(file, type, null);
                 } catch (IOException backupError) {
@@ -98,9 +149,10 @@ public class JsonUtils {
             }
 
 
+            // Create backup before saving to data/backup folder
             if (file.exists()) {
-                File backup = new File(file.getParentFile(), file.getName() + ".backup");
-                Files.copy(file.toPath(), backup.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                File backupFile = getBackupFile(file);
+                Files.copy(file.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
 
