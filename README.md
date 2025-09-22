@@ -2,8 +2,9 @@
 
 [![Java](https://img.shields.io/badge/Java-11+-orange.svg)](https://www.oracle.com/java/)
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.13--1.21.8-green.svg)](https://www.minecraft.net/)
-[![Spigot](https://img.shields.io/badge/Spigot-Compatible-yellow.svg)](https://www.spigotmc.org/)
-[![Discord](https://img.shields.io/badge/Discord-Integration-blue.svg)](https://discord.com/)
+[![Spigot](https://img.shields.io/badge/Spigot-Download-yellow.svg)](https://www.spigotmc.org/resources/ipdynamic.119431/)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-blue.svg)](https://discord.gg/hidencloud)
+[![GitHub](https://img.shields.io/badge/GitHub-Open%20Source-black.svg)](https://github.com/SrCodexStudio/IPDynamic)
 
 **Advanced security plugin for Minecraft servers with intelligent alt detection, dynamic IP banning, and comprehensive Discord integration.**
 
@@ -48,16 +49,15 @@
 
 ## 🏗️ Quick Start
 
-### Compilation with ProGuard Protection:
+### Compilation:
 ```bash
-# Single command - Maven handles everything automatically
+# Clone the repository
+git clone https://github.com/SrCodexStudio/IPDynamic.git
+cd IPDynamic
+
+# Compile with Maven
 mvn clean package
 ```
-
-**No additional setup required!** Maven automatically:
-- ✅ Downloads ProGuard dependencies
-- ✅ Applies aggressive obfuscation
-- ✅ Generates protected final JAR
 
 ### Installation:
 1. Download the JAR from `target/IPDynamic-2.5-OMEGA.jar`
@@ -270,56 +270,48 @@ templates:
 
 ---
 
-## 🔒 Security & Protection
-
-### Code Protection (ProGuard)
-```
-Original Structure:
-me.lssupportteam.ipdynamic.managers.BanManager
-me.lssupportteam.ipdynamic.models.PlayerData
-
-Obfuscated Result:
-a.a (BanManager)
-a.b (PlayerData)
-```
-
-### Protection Features
-- **✅ Complete Package Renaming**: All packages flattened to simple letters
-- **✅ Class Obfuscation**: Custom dictionary with unpredictable names
-- **✅ Method/Field Renaming**: Single-letter names for all members
-- **✅ Code Optimization**: Improved performance through optimization
-- **✅ Debug Mapping**: Retraceable for support purposes
+## 🔒 Security Features
 
 ### Security Measures
 - **IP Ban Evasion Protection**: Multiple ban types and ranges
 - **Alt Account Detection**: Advanced algorithms to catch ban evaders
 - **Whitelist System**: Trusted player bypass mechanism
 - **Audit Logging**: Complete action tracking for administrators
+- **Secure Configuration**: Safe handling of sensitive data
+
+### Protection Systems
+- **Dynamic Rate Limiting**: Prevent API abuse
+- **Input Validation**: Secure handling of user commands
+- **Permission System**: Granular access control
+- **Error Handling**: Graceful failure management
 
 ---
 
 ## 🤝 Contributing
 
+We welcome contributions from the community! This project is open source to encourage improvements and support the Minecraft community.
+
 ### Development Setup
-1. **Clone Repository**: `git clone <repository-url>`
-2. **Install Dependencies**: `mvn clean install`
-3. **Development Build**: `mvn compile` (no obfuscation)
-4. **Production Build**: `mvn package` (with obfuscation)
+1. **Fork the Repository**: Click "Fork" on GitHub
+2. **Clone Your Fork**: `git clone https://github.com/yourusername/IPDynamic.git`
+3. **Create a Branch**: `git checkout -b feature/your-feature-name`
+4. **Make Changes**: Implement your improvements
+5. **Test Thoroughly**: Ensure everything works properly
+6. **Submit PR**: Create a pull request with detailed description
 
 ### Code Guidelines
 - **Java 11+** compatibility required
 - **Async-first** approach for heavy operations
 - **Null-safe** coding practices
 - **Comprehensive** error handling
+- **Clean code** with proper documentation
 
-### Testing
-```bash
-# Run tests
-mvn test
-
-# Integration tests with test server
-mvn verify
-```
+### Areas for Contribution
+- **New Language Translations**: Help us support more languages
+- **Performance Improvements**: Optimize existing systems
+- **Bug Fixes**: Report and fix issues
+- **Documentation**: Improve guides and examples
+- **Feature Requests**: Suggest new functionality
 
 ---
 
@@ -340,10 +332,19 @@ mvn verify
 ## 🆘 Support & Documentation
 
 ### Getting Help
-- **Configuration Issues**: Check the example configs above
-- **Discord Setup**: Ensure bot has proper permissions
-- **Performance Problems**: Enable debug mode for detailed logging
-- **Language Issues**: Verify language setting in config.yml
+- **🎮 Spigot Resource**: [Download & Support](https://www.spigotmc.org/resources/ipdynamic.119431/)
+- **💬 Discord Server**: [Join our community](https://discord.gg/hidencloud)
+- **📁 GitHub Issues**: [Report bugs & request features](https://github.com/SrCodexStudio/IPDynamic/issues)
+- **📖 Wiki**: Comprehensive documentation and guides
+
+### Common Issues & Solutions
+| Issue | Solution |
+|-------|----------|
+| Plugin not loading | Check Java version (11+ required) |
+| Discord bot offline | Verify token and permissions |
+| Bans not working | Check IP format and patterns |
+| High memory usage | Reduce cache size in config |
+| Language not working | Verify language setting in config.yml |
 
 ### Debugging
 ```yaml
@@ -357,30 +358,57 @@ debug:
   log-level: "INFO"
 ```
 
-### Troubleshooting
-| Issue | Solution |
-|-------|----------|
-| Plugin not loading | Check Java version (11+ required) |
-| Discord bot offline | Verify token and permissions |
-| Bans not working | Check IP format and patterns |
-| High memory usage | Reduce cache size in config |
-
 ---
 
-## 📄 License
+## 📄 License & Terms
 
-This project is proprietary software. All rights reserved.
+### License Information
+**All rights reserved** - This project is the intellectual property of **SrCodex (SrCodexStudio)**.
 
-**IPDynamic 2.5-OMEGA** - Professional Minecraft Security Solution
+### Open Source Commitment
+While I, **SrCodex**, retain all rights to this project, I have decided to **open the source code** for the entire Minecraft community. This decision is made to:
+
+- 🤝 **Support the Community**: Allow server owners and developers to understand and improve the plugin
+- 🔧 **Encourage Contributions**: Enable the community to enhance and extend functionality
+- 📚 **Educational Purpose**: Help other developers learn from the codebase
+- 🚀 **Accelerate Development**: Leverage community expertise for faster improvements
+
+### Terms of Use
+- ✅ **Free to Use**: You can use this plugin on your servers without cost
+- ✅ **Modify & Improve**: You can modify the code and contribute back to the project
+- ✅ **Learn & Study**: Use the code for educational purposes
+- ❌ **Commercial Redistribution**: You cannot sell or redistribute this plugin commercially
+- ❌ **Remove Attribution**: You must maintain proper attribution to SrCodex/SrCodexStudio
+- ❌ **Claim Ownership**: You cannot claim ownership of the original codebase
+
+### Contributing Back
+If you make improvements or fixes:
+- 🙏 **Please contribute back** via pull requests
+- 📝 **Document your changes** clearly
+- 🧪 **Test thoroughly** before submitting
+- 💬 **Discuss major changes** in our Discord community first
 
 ---
 
 <div align="center">
 
-**🛡️ Developed by SrCodex | Advanced Minecraft Security Solutions**
+## 🌟 Community & Support
+
+**Join our growing community of server administrators and developers!**
+
+[![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/hidencloud)
+[![Spigot](https://img.shields.io/badge/Spigot-Download%20Plugin-ED8106?style=for-the-badge&logo=spigot&logoColor=white)](https://www.spigotmc.org/resources/ipdynamic.119431/)
+[![GitHub](https://img.shields.io/badge/GitHub-View%20Source-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/SrCodexStudio/IPDynamic)
+
+---
+
+**🛡️ Developed with ❤️ by SrCodex (SrCodexStudio)**
+*Advanced Minecraft Security Solutions*
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![Minecraft](https://img.shields.io/badge/Minecraft-62B47A?style=for-the-badge&logo=minecraft&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)
+
+**⭐ If this project helped you, consider starring it on GitHub!**
 
 </div>
