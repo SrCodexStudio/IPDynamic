@@ -466,3 +466,80 @@ discord:
   connection-failed: "&c❌ Error conectando con Discord API"
   invalid-channel: "&c❌ Canal de Discord inválido o no existe"
   bot-offline: "&c❌ Bot de Discord offline o sin permisos"
+  console-only: "&c❌ Este comando solo puede ser ejecutado desde la consola"
+  usage: "&cUso: &e/ipdy discord <status|stats>"
+  invalid-subcommand: "&cSubcomando inválido. Usa: &estatus&c o &estats"
+  not-initialized: "&c❌ DiscordManager no inicializado"
+  not-connected: "&c❌ Discord bot no está conectado"
+  sending-stats: "&a🤖 Enviando estadísticas de países a Discord..."
+  stats-sent-success: "&a✅ Estadísticas enviadas exitosamente"
+  error-sending-stats: "&c❌ Error enviando estadísticas: {error}"
+  setup-instructions: "&eℹ️ Para habilitar el bot:"
+  step1: "&e1. Ve a &faddons/discord.yml"
+  step2: "&e2. Cambia &fenabled: true"
+  step3: "&e3. Configura tu token, guild-id y channel-id"
+  step4: "&e4. Usa &f/ipdy reload"
+  troubleshooting: "&eℹ️ Si el bot no conecta:"
+  trouble1: "&e1. Verifica que el token sea válido"
+  trouble2: "&e2. Asegúrate que el bot tenga permisos en el servidor"
+  trouble3: "&e3. Revisa los logs del servidor para más detalles"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            MIGRATION MESSAGES                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+migration-command:
+  starting: "&e🔄 Iniciando migración manual de configuraciones..."
+  completed: "&a✅ Migración completada exitosamente"
+  check-logs: "&eRevisa los logs para más detalles"
+  error: "&c❌ Error durante la migración: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            WHITELIST COMMANDS                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+whitelist-command:
+  usage: "&cUso: &e/ipdy whitelist <add|remove|list> [jugador]"
+  examples-header: "&7Ejemplos:"
+  example-add: "&7  /ipdy whitelist add Steve &8- &7Añade a Steve a la whitelist"
+  example-remove: "&7  /ipdy whitelist remove Alex &8- &7Quita a Alex de la whitelist"
+  example-list: "&7  /ipdy whitelist list &8- &7Muestra todos los jugadores en whitelist"
+  specify-player: "&cDebes especificar el nombre del jugador"
+  invalid-action: "&cAcción inválida. Usa: &eadd&c, &eremove&c o &elist"
+  already-whitelisted: "&e⚠️ El jugador &f{player} &eya está en la whitelist"
+  added-success: "&a✅ Jugador &f{player} &aañadido a la whitelist exitosamente"
+  added-info: "&7Este jugador ahora puede conectarse incluso si su IP está baneada con OP1/OP2"
+  not-whitelisted: "&c❌ El jugador &f{player} &cno está en la whitelist"
+  removed-success: "&a✅ Jugador &f{player} &aremovido de la whitelist exitosamente"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               LOG MESSAGES                                    ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+log:
+  player-added-whitelist: "Jugador {player} añadido a la whitelist por {admin}"
+  player-removed-whitelist: "Jugador {player} removido de la whitelist por {admin}"
+  stats-sent-discord: "✅ Estadísticas de países enviadas a Discord"
+  geoip-cache-cleared: "Cache de GeoIP limpiado."
+  addons-initialized: "AddonsManager inicializado correctamente"
+  addons-folder-created: "Carpeta addons/ creada exitosamente"
+  addon-file-created: "Archivo addon creado: {file}"
+  addon-basic-created: "Archivo addon básico creado: {file}"
+  addon-loaded: "Addon cargado: {addon}"
+  addon-reloaded: "Addon recargado: {addon}"
+  all-addons-reloaded: "Todos los addons recargados"
+  checking-config-updates: "🔄 Verificando actualizaciones de configuración..."
+  config-check-completed: "✅ Verificación de configuraciones completada"
+  updating-config: "🔧 Actualizando {file} con nuevas opciones..."
+  config-updated-success: "✅ {file} actualizado exitosamente"
+  new-config-found: "🆕 Nueva configuración encontrada: {option}"
+  new-option-added: "➕ Añadida nueva opción: {option} = {value}"
+  backup-created: "💾 Backup creado: {backup}"
+  config-file-created: "Archivo de configuración creado con valores por defecto."
+  config-updated-values: "Configuración actualizada con nuevos valores."
+  webhook-config-created: "Archivo de configuración de webhooks creado con valores por defecto."
+  webhook-config-updated: "Configuración de webhooks actualizada con nuevos valores."
+  lang-loaded: "Idioma cargado: {lang}"
+  lang-file-created: "Archivo de idioma creado: {file}"
+  discord-initializing: "🔄 Inicializando DiscordManager..."
+  discord-disabled-config: "⚠️ Discord Bot deshabilitado en configuración (enabled: false)"
+  discord-validating: "🔍 Validando configuración Discord..."
+  discord-validation-success: "✅ Configuración Discord validada correctamente"
+  discord-bot-initialized: "🤖 Discord Bot inicializado correctamente"

@@ -58,7 +58,7 @@ public class DiscordStatsService {
             }
             String messageId = sendEmbedToChannel(embed, channelId);
 
-            plugin.getLogger().info("✅ Estadísticas de países enviadas a Discord");
+            plugin.getLogger().info(plugin.getLangManager().getMessage("log.stats-sent-discord"));
             return messageId;
 
         } catch (Exception e) {

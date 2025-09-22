@@ -466,3 +466,80 @@ discord:
   connection-failed: "&c❌ Error connecting to Discord API"
   invalid-channel: "&c❌ Invalid Discord channel or doesn't exist"
   bot-offline: "&c❌ Discord bot offline or without permissions"
+  console-only: "&c❌ This command can only be executed from the console"
+  usage: "&cUsage: &e/ipdy discord <status|stats>"
+  invalid-subcommand: "&cInvalid subcommand. Use: &estatus&c or &estats"
+  not-initialized: "&c❌ DiscordManager not initialized"
+  not-connected: "&c❌ Discord bot is not connected"
+  sending-stats: "&a🤖 Sending country statistics to Discord..."
+  stats-sent-success: "&a✅ Statistics sent successfully"
+  error-sending-stats: "&c❌ Error sending statistics: {error}"
+  setup-instructions: "&eℹ️ To enable the bot:"
+  step1: "&e1. Go to &faddons/discord.yml"
+  step2: "&e2. Change &fenabled: true"
+  step3: "&e3. Configure your token, guild-id and channel-id"
+  step4: "&e4. Use &f/ipdy reload"
+  troubleshooting: "&eℹ️ If the bot doesn't connect:"
+  trouble1: "&e1. Verify that the token is valid"
+  trouble2: "&e2. Make sure the bot has permissions on the server"
+  trouble3: "&e3. Check server logs for more details"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            MIGRATION MESSAGES                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+migration-command:
+  starting: "&e🔄 Starting manual configuration migration..."
+  completed: "&a✅ Migration completed successfully"
+  check-logs: "&eCheck logs for more details"
+  error: "&c❌ Error during migration: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            WHITELIST COMMANDS                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+whitelist-command:
+  usage: "&cUsage: &e/ipdy whitelist <add|remove|list> [player]"
+  examples-header: "&7Examples:"
+  example-add: "&7  /ipdy whitelist add Steve &8- &7Add Steve to whitelist"
+  example-remove: "&7  /ipdy whitelist remove Alex &8- &7Remove Alex from whitelist"
+  example-list: "&7  /ipdy whitelist list &8- &7Show all whitelisted players"
+  specify-player: "&cYou must specify the player name"
+  invalid-action: "&cInvalid action. Use: &eadd&c, &eremove&c or &elist"
+  already-whitelisted: "&e⚠️ Player &f{player} &eis already in the whitelist"
+  added-success: "&a✅ Player &f{player} &aadded to whitelist successfully"
+  added-info: "&7This player can now connect even if their IP is banned with OP1/OP2"
+  not-whitelisted: "&c❌ Player &f{player} &cis not in the whitelist"
+  removed-success: "&a✅ Player &f{player} &aremoved from whitelist successfully"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                               LOG MESSAGES                                    ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+log:
+  player-added-whitelist: "Player {player} added to whitelist by {admin}"
+  player-removed-whitelist: "Player {player} removed from whitelist by {admin}"
+  stats-sent-discord: "✅ Country statistics sent to Discord"
+  geoip-cache-cleared: "GeoIP cache cleared."
+  addons-initialized: "AddonsManager initialized correctly"
+  addons-folder-created: "addons/ folder created successfully"
+  addon-file-created: "Addon file created: {file}"
+  addon-basic-created: "Basic addon file created: {file}"
+  addon-loaded: "Addon loaded: {addon}"
+  addon-reloaded: "Addon reloaded: {addon}"
+  all-addons-reloaded: "All addons reloaded"
+  checking-config-updates: "🔄 Checking configuration updates..."
+  config-check-completed: "✅ Configuration check completed"
+  updating-config: "🔧 Updating {file} with new options..."
+  config-updated-success: "✅ {file} updated successfully"
+  new-config-found: "🆕 New configuration found: {option}"
+  new-option-added: "➕ Added new option: {option} = {value}"
+  backup-created: "💾 Backup created: {backup}"
+  config-file-created: "Configuration file created with default values."
+  config-updated-values: "Configuration updated with new values."
+  webhook-config-created: "Webhook configuration file created with default values."
+  webhook-config-updated: "Webhook configuration updated with new values."
+  lang-loaded: "Language loaded: {lang}"
+  lang-file-created: "Language file created: {file}"
+  discord-initializing: "🔄 Initializing DiscordManager..."
+  discord-disabled-config: "⚠️ Discord Bot disabled in configuration (enabled: false)"
+  discord-validating: "🔍 Validating Discord configuration..."
+  discord-validation-success: "✅ Discord configuration validated successfully"
+  discord-bot-initialized: "🤖 Discord Bot initialized correctly"

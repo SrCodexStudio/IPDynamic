@@ -234,7 +234,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
         String finalPattern = convertPattern(pattern, type);
         if (finalPattern == null) {
-            sendMessage(sender, "&cPatrón de IP inválido para el tipo " + type);
+            sendMessage(sender, plugin.getLangManager().getMessage("command.invalid-pattern").replace("{type}", type));
             return;
         }
 
@@ -256,7 +256,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 plugin.getWebhookService().sendUnbanNotification(finalPattern, unbannedBy, banType, result.affectedIps);
 
             } else {
-                sendMessage(sender, "&c❌ Error aplicando unban: " + result.message);
+                sendMessage(sender, plugin.getLangManager().getMessage("errors.applying-unban").replace("{error}", result.message));
             }
         }).exceptionally(throwable -> {
             sendMessage(sender, plugin.getLangManager().getMessage("errors.unexpected-error").replace("{error}", throwable.getMessage()));
@@ -266,12 +266,12 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     private void handleAlts(CommandSender sender, String[] args) {
         if (!sender.hasPermission("ipdynamic.alts")) {
-            sendMessage(sender, "&cNo tienes permisos para usar este comando.");
+            sendMessage(sender, plugin.getLangManager().getMessage("no-permission"));
             return;
         }
 
         if (args.length < 2) {
-            sendMessage(sender, "&cUso: &e/ipdy alts <jugador>");
+            sendMessage(sender, plugin.getLangManager().getMessage("command.alts-usage"));
             return;
         }
 
@@ -282,7 +282,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             PlayerData playerData = plugin.getDataManager().getPlayerData(target);
 
             if (playerData == null) {
-                sendMessage(sender, "&c❌ Jugador no encontrado en la base de datos.");
+                sendMessage(sender, plugin.getLangManager().getMessage("command.player-not-found-db"));
                 return;
             }
 
@@ -294,12 +294,12 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     private void handleInfo(CommandSender sender, String[] args) {
         if (!sender.hasPermission("ipdynamic.info")) {
-            sendMessage(sender, "&cNo tienes permisos para usar este comando.");
+            sendMessage(sender, plugin.getLangManager().getMessage("no-permission"));
             return;
         }
 
         if (args.length < 2) {
-            sendMessage(sender, "&cUso: &e/ipdy info <jugador>");
+            sendMessage(sender, plugin.getLangManager().getMessage("command.info-usage"));
             return;
         }
 
@@ -310,7 +310,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             PlayerData playerData = plugin.getDataManager().getPlayerData(target);
 
             if (playerData == null) {
-                sendMessage(sender, "&c❌ Jugador no encontrado en la base de datos.");
+                sendMessage(sender, plugin.getLangManager().getMessage("command.player-not-found-db"));
                 return;
             }
 
@@ -321,7 +321,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     private void handleStats(CommandSender sender) {
         if (!sender.hasPermission("ipdynamic.stats")) {
-            sendMessage(sender, "&cNo tienes permisos para usar este comando.");
+            sendMessage(sender, plugin.getLangManager().getMessage("no-permission"));
             return;
         }
 
@@ -346,7 +346,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     private void handleDiscord(CommandSender sender, String[] args) {
         // Restrict to console only
         if (sender instanceof Player) {
-            sendMessage(sender, "&c❌ Este comando solo puede ser ejecutado desde la consola");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.console-only"));
             return;
         }
 
@@ -356,7 +356,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         }
 
         if (args.length < 2) {
-            sendMessage(sender, "&cUso: &e/ipdy discord <status|stats>");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.usage"));
             return;
         }
 
@@ -369,14 +369,14 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 handleDiscordStats(sender);
                 break;
             default:
-                sendMessage(sender, "&cSubcomando inválido. Usa: &estatus&c o &estats");
+                sendMessage(sender, plugin.getLangManager().getMessage("discord.invalid-subcommand"));
                 break;
         }
     }
 
     private void handleDiscordStatus(CommandSender sender) {
         if (plugin.getDiscordManager() == null) {
-            sendMessage(sender, "&c❌ DiscordManager no inicializado");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.not-initialized"));
             return;
         }
 
@@ -403,31 +403,31 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
         // Additional help if bot is not working
         if (!discordManager.isEnabled()) {
-            sendMessage(sender, "&eℹ️ Para habilitar el bot:");
-            sendMessage(sender, "&e1. Ve a &faddons/discord.yml");
-            sendMessage(sender, "&e2. Cambia &fenabled: true");
-            sendMessage(sender, "&e3. Configura tu token, guild-id y channel-id");
-            sendMessage(sender, "&e4. Usa &f/ipdy reload");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.setup-instructions"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.step1"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.step2"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.step3"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.step4"));
         } else if (!discordManager.isConnected()) {
-            sendMessage(sender, "&eℹ️ Si el bot no conecta:");
-            sendMessage(sender, "&e1. Verifica que el token sea válido");
-            sendMessage(sender, "&e2. Asegúrate que el bot tenga permisos en el servidor");
-            sendMessage(sender, "&e3. Revisa los logs del servidor para más detalles");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.troubleshooting"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.trouble1"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.trouble2"));
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.trouble3"));
         }
     }
 
     private void handleDiscordStats(CommandSender sender) {
         if (plugin.getDiscordManager() == null || !plugin.getDiscordManager().isConnected()) {
-            sendMessage(sender, "&c❌ Discord bot no está conectado");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.not-connected"));
             return;
         }
 
-        sendMessage(sender, "&a🤖 Enviando estadísticas de países a Discord...");
+        sendMessage(sender, plugin.getLangManager().getMessage("discord.sending-stats"));
 
         plugin.getDiscordManager().sendCountryStatsAsync()
-            .thenRun(() -> sendMessage(sender, "&a✅ Estadísticas enviadas exitosamente"))
+            .thenRun(() -> sendMessage(sender, plugin.getLangManager().getMessage("discord.stats-sent-success")))
             .exceptionally(throwable -> {
-                sendMessage(sender, "&c❌ Error enviando estadísticas: " + throwable.getMessage());
+                sendMessage(sender, plugin.getLangManager().getMessage("discord.error-sending-stats").replace("{error}", throwable.getMessage()));
                 return null;
             });
     }
@@ -435,7 +435,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     private void handleMigrate(CommandSender sender) {
         // Restrict to console only
         if (sender instanceof Player) {
-            sendMessage(sender, "&c❌ Este comando solo puede ser ejecutado desde la consola");
+            sendMessage(sender, plugin.getLangManager().getMessage("discord.console-only"));
             return;
         }
 
@@ -444,15 +444,15 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             return;
         }
 
-        sendMessage(sender, "&e🔄 Iniciando migración manual de configuraciones...");
+        sendMessage(sender, plugin.getLangManager().getMessage("migration-command.starting"));
 
         CompletableFuture.runAsync(() -> {
             try {
                 plugin.getConfigMigrator().migrateAllConfigs();
-                sendMessage(sender, "&a✅ Migración completada exitosamente");
-                sendMessage(sender, "&eRevisa los logs para más detalles");
+                sendMessage(sender, plugin.getLangManager().getMessage("migration-command.completed"));
+                sendMessage(sender, plugin.getLangManager().getMessage("migration-command.check-logs"));
             } catch (Exception e) {
-                sendMessage(sender, "&c❌ Error durante la migración: " + e.getMessage());
+                sendMessage(sender, plugin.getLangManager().getMessage("migration-command.error").replace("{error}", e.getMessage()));
                 plugin.getLogger().severe("Error en migración manual: " + e.getMessage());
             }
         }, plugin.getExecutorService());
@@ -465,11 +465,11 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         }
 
         if (args.length < 3) {
-            sendMessage(sender, "&cUso: &e/ipdy whitelist <add|remove|list> [jugador]");
-            sendMessage(sender, "&7Ejemplos:");
-            sendMessage(sender, "&7  /ipdy whitelist add Steve &8- &7Añade a Steve a la whitelist");
-            sendMessage(sender, "&7  /ipdy whitelist remove Alex &8- &7Quita a Alex de la whitelist");
-            sendMessage(sender, "&7  /ipdy whitelist list &8- &7Muestra todos los jugadores en whitelist");
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.usage"));
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.examples-header"));
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.example-add"));
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.example-remove"));
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.example-list"));
             return;
         }
 
@@ -478,7 +478,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         switch (action) {
             case "add":
                 if (args.length < 3) {
-                    sendMessage(sender, "&cDebes especificar el nombre del jugador");
+                    sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.specify-player"));
                     return;
                 }
                 String playerToAdd = args[2];
@@ -487,7 +487,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
             case "remove":
                 if (args.length < 3) {
-                    sendMessage(sender, "&cDebes especificar el nombre del jugador");
+                    sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.specify-player"));
                     return;
                 }
                 String playerToRemove = args[2];
@@ -499,7 +499,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 break;
 
             default:
-                sendMessage(sender, "&cAcción inválida. Usa: &eadd&c, &eremove&c o &elist");
+                sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.invalid-action"));
                 break;
         }
     }
@@ -507,43 +507,37 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     private void handleWhitelistAdd(CommandSender sender, String playerName) {
         CompletableFuture.runAsync(() -> {
             if (plugin.getWhitelistManager().isWhitelisted(playerName)) {
-                sendMessage(sender, "&e⚠️ El jugador &f" + playerName + " &eya está en la whitelist");
+                sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.already-whitelisted").replace("{player}", playerName));
                 return;
             }
 
-            plugin.getWhitelistManager().addToWhitelist(playerName);
-            sendMessage(sender, "&a✅ Jugador &f" + playerName + " &aañadido a la whitelist exitosamente");
-            sendMessage(sender, "&7Este jugador ahora puede conectarse incluso si su IP está baneada con OP1/OP2");
-
-            // Save whitelist
-            plugin.getWhitelistManager().saveWhitelist();
+            plugin.getWhitelistManager().addPlayer(playerName);
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.added-success").replace("{player}", playerName));
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.added-info"));
 
             // Log action
-            plugin.getLogger().info("Jugador " + playerName + " añadido a la whitelist por " + sender.getName());
+            plugin.getLogger().info(plugin.getLangManager().getMessage("log.player-added-whitelist").replace("{player}", playerName).replace("{admin}", sender.getName()));
         }, plugin.getExecutorService());
     }
 
     private void handleWhitelistRemove(CommandSender sender, String playerName) {
         CompletableFuture.runAsync(() -> {
             if (!plugin.getWhitelistManager().isWhitelisted(playerName)) {
-                sendMessage(sender, "&c❌ El jugador &f" + playerName + " &cno está en la whitelist");
+                sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.not-whitelisted").replace("{player}", playerName));
                 return;
             }
 
-            plugin.getWhitelistManager().removeFromWhitelist(playerName);
-            sendMessage(sender, "&a✅ Jugador &f" + playerName + " &aremovido de la whitelist exitosamente");
-
-            // Save whitelist
-            plugin.getWhitelistManager().saveWhitelist();
+            plugin.getWhitelistManager().removePlayer(playerName);
+            sendMessage(sender, plugin.getLangManager().getMessage("whitelist-command.removed-success").replace("{player}", playerName));
 
             // Log action
-            plugin.getLogger().info("Jugador " + playerName + " removido de la whitelist por " + sender.getName());
+            plugin.getLogger().info(plugin.getLangManager().getMessage("log.player-removed-whitelist").replace("{player}", playerName).replace("{admin}", sender.getName()));
         }, plugin.getExecutorService());
     }
 
     private void handleWhitelistList(CommandSender sender) {
         CompletableFuture.runAsync(() -> {
-            Set<String> whitelistedPlayers = plugin.getWhitelistManager().getWhitelistedPlayers();
+            Set<String> whitelistedPlayers = plugin.getWhitelistManager().getAllWhitelistedPlayers();
 
             // Send header
             List<String> headerLines = plugin.getLangManager().getMessageLines("menus.whitelist.header");
@@ -807,7 +801,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                     }
                 } else if (action.equals("remove")) {
                     // For remove, suggest whitelisted players
-                    Set<String> whitelistedPlayers = plugin.getWhitelistManager().getWhitelistedPlayers();
+                    Set<String> whitelistedPlayers = plugin.getWhitelistManager().getAllWhitelistedPlayers();
                     StringUtil.copyPartialMatches(args[2], whitelistedPlayers, completions);
                 }
             }

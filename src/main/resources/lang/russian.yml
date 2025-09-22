@@ -466,3 +466,80 @@ discord:
   connection-failed: "&c❌ Ошибка подключения к Discord API"
   invalid-channel: "&c❌ Неверный канал Discord или не существует"
   bot-offline: "&c❌ Discord бот офлайн или без разрешений"
+  console-only: "&c❌ Эта команда может быть выполнена только из консоли"
+  usage: "&cИспользование: &e/ipdy discord <status|stats>"
+  invalid-subcommand: "&cНеверная подкоманда. Используйте: &estatus&c или &estats"
+  not-initialized: "&c❌ DiscordManager не инициализирован"
+  not-connected: "&c❌ Discord бот не подключён"
+  sending-stats: "&a🤖 Отправка статистики стран в Discord..."
+  stats-sent-success: "&a✅ Статистика успешно отправлена"
+  error-sending-stats: "&c❌ Ошибка отправки статистики: {error}"
+  setup-instructions: "&eℹ️ Для включения бота:"
+  step1: "&e1. Перейдите в &faddons/discord.yml"
+  step2: "&e2. Измените &fenabled: true"
+  step3: "&e3. Настройте ваш токен, guild-id и channel-id"
+  step4: "&e4. Используйте &f/ipdy reload"
+  troubleshooting: "&eℹ️ Если бот не подключается:"
+  trouble1: "&e1. Убедитесь, что токен действителен"
+  trouble2: "&e2. Убедитесь, что у бота есть разрешения на сервере"
+  trouble3: "&e3. Проверьте логи сервера для подробностей"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            СООБЩЕНИЯ МИГРАЦИИ                                 ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+migration-command:
+  starting: "&e🔄 Запуск ручной миграции конфигураций..."
+  completed: "&a✅ Миграция успешно завершена"
+  check-logs: "&eПроверьте логи для подробностей"
+  error: "&c❌ Ошибка во время миграции: {error}"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            КОМАНДЫ БЕЛОГО СПИСКА                              ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+whitelist-command:
+  usage: "&cИспользование: &e/ipdy whitelist <add|remove|list> [игрок]"
+  examples-header: "&7Примеры:"
+  example-add: "&7  /ipdy whitelist add Steve &8- &7Добавить Steve в белый список"
+  example-remove: "&7  /ipdy whitelist remove Alex &8- &7Удалить Alex из белого списка"
+  example-list: "&7  /ipdy whitelist list &8- &7Показать всех игроков в белом списке"
+  specify-player: "&cВы должны указать имя игрока"
+  invalid-action: "&cНеверное действие. Используйте: &eadd&c, &eremove&c или &elist"
+  already-whitelisted: "&e⚠️ Игрок &f{player} &eуже в белом списке"
+  added-success: "&a✅ Игрок &f{player} &aуспешно добавлен в белый список"
+  added-info: "&7Этот игрок теперь может подключаться, даже если его IP забанен OP1/OP2"
+  not-whitelisted: "&c❌ Игрок &f{player} &cне в белом списке"
+  removed-success: "&a✅ Игрок &f{player} &aуспешно удалён из белого списка"
+
+# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ║                            СООБЩЕНИЯ ЛОГОВ                                    ║
+# ╚════════════════════════════════════════════════════════════════════════════════╝
+log:
+  player-added-whitelist: "Игрок {player} добавлен в белый список администратором {admin}"
+  player-removed-whitelist: "Игрок {player} удалён из белого списка администратором {admin}"
+  stats-sent-discord: "✅ Статистика стран отправлена в Discord"
+  geoip-cache-cleared: "Кеш GeoIP очищен."
+  addons-initialized: "AddonsManager инициализирован корректно"
+  addons-folder-created: "Папка addons/ создана успешно"
+  addon-file-created: "Файл аддона создан: {file}"
+  addon-basic-created: "Базовый файл аддона создан: {file}"
+  addon-loaded: "Аддон загружен: {addon}"
+  addon-reloaded: "Аддон перезагружен: {addon}"
+  all-addons-reloaded: "Все аддоны перезагружены"
+  checking-config-updates: "🔄 Проверка обновлений конфигурации..."
+  config-check-completed: "✅ Проверка конфигураций завершена"
+  updating-config: "🔧 Обновление {file} новыми опциями..."
+  config-updated-success: "✅ {file} успешно обновлён"
+  new-config-found: "🆕 Найдена новая конфигурация: {option}"
+  new-option-added: "➕ Добавлена новая опция: {option} = {value}"
+  backup-created: "💾 Резервная копия создана: {backup}"
+  config-file-created: "Файл конфигурации создан со значениями по умолчанию."
+  config-updated-values: "Конфигурация обновлена новыми значениями."
+  webhook-config-created: "Файл конфигурации вебхуков создан со значениями по умолчанию."
+  webhook-config-updated: "Конфигурация вебхуков обновлена новыми значениями."
+  lang-loaded: "Язык загружен: {lang}"
+  lang-file-created: "Файл языка создан: {file}"
+  discord-initializing: "🔄 Инициализация DiscordManager..."
+  discord-disabled-config: "⚠️ Discord бот отключён в конфигурации (enabled: false)"
+  discord-validating: "🔍 Проверка конфигурации Discord..."
+  discord-validation-success: "✅ Конфигурация Discord успешно проверена"
+  discord-bot-initialized: "🤖 Discord бот успешно инициализирован"

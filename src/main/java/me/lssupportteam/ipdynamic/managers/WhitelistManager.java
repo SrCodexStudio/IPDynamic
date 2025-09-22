@@ -58,7 +58,9 @@ public class WhitelistManager {
 
         boolean added = whitelistedPlayers.add(playerName.toLowerCase());
         if (added) {
-            plugin.getLogger().info("Jugador añadido a whitelist: " + playerName);
+            // Save to JSON file immediately
+            saveWhitelist();
+            plugin.getLogger().info(plugin.getLangManager().getMessage("log.player-added-whitelist").replace("{player}", playerName).replace("{admin}", "System"));
         }
         return added;
     }
@@ -70,7 +72,9 @@ public class WhitelistManager {
 
         boolean removed = whitelistedPlayers.remove(playerName.toLowerCase());
         if (removed) {
-            plugin.getLogger().info("Jugador removido de whitelist: " + playerName);
+            // Save to JSON file immediately
+            saveWhitelist();
+            plugin.getLogger().info(plugin.getLangManager().getMessage("log.player-removed-whitelist").replace("{player}", playerName).replace("{admin}", "System"));
         }
         return removed;
     }
@@ -92,6 +96,6 @@ public class WhitelistManager {
 
     public void clearWhitelist() {
         whitelistedPlayers.clear();
-        plugin.getLogger().info("Whitelist limpiada.");
+        plugin.getLogger().info(plugin.getLangManager().getMessage("whitelist.cleared"));
     }
 }

@@ -207,7 +207,7 @@ public class GeoIPService {
 
     public void clearCache() {
         locationCache.clear();
-        plugin.getLogger().info("Cache de GeoIP limpiado.");
+        plugin.getLogger().info(plugin.getLangManager().getMessage("log.geoip-cache-cleared"));
     }
 
     public void clearExpiredCache() {
