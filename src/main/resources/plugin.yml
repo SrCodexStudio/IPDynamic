@@ -4,7 +4,7 @@ main: me.lssupportteam.ipdynamic.IPDynamic
 api-version: '1.13'
 author: SrCodex
 description: ${project.description}
-website: https://github.com/SrCodex/IPDynamic
+website: https://github.com/SrCodexStudio/IPDynamic
 softdepend: [PlaceholderAPI]
 load: STARTUP
 
