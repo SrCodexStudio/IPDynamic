@@ -326,121 +326,109 @@ menus:
   help:
     lines:
       - ""
-      - "&b      ╭─────────────── &fIPDynamic 2.5-OMEGA &b───────────────╮"
-      - "&b      │                                                   "
-      - "&b      │  &e• &f/ipdy help           &7➜  &aShow this menu        "
-      - "&b      │  &e• &f/ipdy alts &6<player>  &7➜  &aView alternate accounts "
-      - "&b      │  &e• &f/ipdy info &6<player>  &7➜  &aDetailed information   "
-      - "&b      │  &e• &f/ipdy ban op1 &6<ip>   &7➜  &aBan /24 range          "
-      - "&b      │  &e• &f/ipdy ban op2 &6<ip>   &7➜  &aBan /16 range          "
-      - "&b      │  &e• &f/ipdy unban &6<type>   &7➜  &aRemove ban             "
-      - "&b      │  &e• &f/ipdy whitelist &6<cmd> &7➜  &aManage whitelist       "
-      - "&b      │  &e• &f/ipdy stats          &7➜  &aView statistics        "
-      - "&b      │  &e• &f/ipdy reload         &7➜  &aReload plugin          "
-      - "&b      │  &e• &f/ipdy version        &7➜  &aVersion information    "
-      - "&b      │                                                   "
-      - "&b      ╰───────────────────────────────────────────────────╯"
+      - "                &b&lIPDynamic 2.5-OMEGA"
+      - ""
+      - "        &e• &f/ipdy help           &7➜  &aShow this menu"
+      - "        &e• &f/ipdy alts &6<player>  &7➜  &aView alternate accounts"
+      - "        &e• &f/ipdy info &6<player>  &7➜  &aDetailed information"
+      - "        &e• &f/ipdy ban op1 &6<ip>   &7➜  &aBan /24 range"
+      - "        &e• &f/ipdy ban op2 &6<ip>   &7➜  &aBan /16 range"
+      - "        &e• &f/ipdy unban &6<type>   &7➜  &aRemove ban"
+      - "        &e• &f/ipdy whitelist &6<cmd> &7➜  &aManage whitelist"
+      - "        &e• &f/ipdy stats          &7➜  &aView statistics"
+      - "        &e• &f/ipdy reload         &7➜  &aReload plugin"
+      - "        &e• &f/ipdy version        &7➜  &aVersion information"
       - ""
 
 
   alts:
     header:
       - ""
-      - "&c      ╭────────────── &fAlternate Accounts &c────────────────╮"
-      - "&c      │                                                   "
+      - "              &c&lAlternate Accounts"
+      - ""
     player-info:
-      - "&c      │  &e➣ &fPlayer: &a{player}                                "
-      - "&c      │  &e➣ &fConnections: &e{connections} &7• &fLast: &e{last}           "
-      - "&c      │                                                   "
-    alt-entry: "&c      │  &e• &f{name}     &7➜  &e{connections} connections  &7IP: {ip} "
-    no-alts: "&c      │  &7➜ No alternate accounts found               "
-    total: "&c      │  &7➜ Total alts found: &e{count}                       "
+      - "        &e➣ &fPlayer: &a{player}"
+      - "        &e➣ &fConnections: &e{connections} &7• &fLast: &e{last}"
+      - ""
+    alt-entry: "        &e• &f{name} &7➜ &e{connections} connections &7IP: {ip}"
+    no-alts: "        &7No alternate accounts found"
+    total: "        &7Total alts found: &e{count}"
     footer:
-      - "&c      │                                                   "
-      - "&c      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
   info:
     header:
       - ""
-      - "&9      ╭──────────── &fPlayer Information &9──────────────╮"
-      - "&9      │                                                   "
+      - "             &9&lPlayer Information"
+      - ""
     player-data:
-      - "&9      │  &e➣ &fPlayer: &a{player}                                "
-      - "&9      │  &e➣ &fUUID: &7{uuid}    "
-      - "&9      │  &e➣ &fTotal Connections: &e{connections}                        "
-      - "&9      │  &e➣ &fFirst Connection: &e{first_join}             "
-      - "&9      │  &e➣ &fLast Connection: &e{last_join}              "
-      - "&9      │  &e➣ &fCurrent IP: &e{current_ip}                       "
-      - "&9      │  &e➣ &fCountry: &e{country} {flag}                               "
-      - "&9      │  &e➣ &fIs Admin: {admin_status}                                 "
-      - "&9      │                                                   "
-      - "&9      │  &e• &fIP History: &e{ip_count} addresses                    "
-      - "&9      │  &e• &fAlternate Accounts: &e{alt_count} detected                 "
+      - "        &e➣ &fPlayer: &a{player}"
+      - "        &e➣ &fUUID: &7{uuid}"
+      - "        &e➣ &fTotal Connections: &e{connections}"
+      - "        &e➣ &fFirst Connection: &e{first_join}"
+      - "        &e➣ &fLast Connection: &e{last_join}"
+      - "        &e➣ &fCurrent IP: &e{current_ip}"
+      - "        &e➣ &fCountry: &e{country} {flag}"
+      - "        &e➣ &fIs Admin: {admin_status}"
+      - ""
+      - "        &e• &fIP History: &e{ip_count} addresses"
+      - "        &e• &fAlternate Accounts: &e{alt_count} detected"
     footer:
-      - "&9      │                                                   "
-      - "&9      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
   stats:
     header:
       - ""
-      - "&d      ╭─────────────── &fIPDynamic Statistics &d───────────────╮"
-      - "&d      │                                                   "
+      - "           &d&lIPDynamic Statistics"
+      - ""
     data-section:
-      - "&d      │  &e➣ &fRegistered Players: &a{total_players}                     "
-      - "&d      │  &e➣ &fUnique IPs: &a{unique_ips}                            "
-      - "&d      │  &e➣ &fActive Connections: &a{active_connections}                      "
-      - "&d      │  &e➣ &fConnection History: &a{connection_history}                 "
-      - "&d      │  &e➣ &fAdmin Logins: &a{admin_logins}                       "
-      - "&d      │  &e➣ &fDetected Alts: &a{detected_alts}                         "
-      - "&d      │                                                   "
+      - "        &e➣ &fRegistered Players: &a{total_players}"
+      - "        &e➣ &fUnique IPs: &a{unique_ips}"
+      - "        &e➣ &fActive Connections: &a{active_connections}"
+      - "        &e➣ &fConnection History: &a{connection_history}"
+      - "        &e➣ &fAdmin Logins: &a{admin_logins}"
+      - "        &e➣ &fDetected Alts: &a{detected_alts}"
+      - ""
     ban-section:
-      - "&d      │  &e• &fIndividual Bans: &e{single_bans}                        "
-      - "&d      │  &e• &fOP1 Bans: &e{op1_bans}                              "
-      - "&d      │  &e• &fOP2 Bans: &e{op2_bans}                              "
-      - "&d      │  &e• &fPending Bans: &e{pending_bans}                       "
+      - "        &e• &fIndividual Bans: &e{single_bans}"
+      - "        &e• &fOP1 Bans: &e{op1_bans}"
+      - "        &e• &fOP2 Bans: &e{op2_bans}"
+      - "        &e• &fPending Bans: &e{pending_bans}"
     footer:
-      - "&d      │                                                   "
-      - "&d      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
   version:
     lines:
       - ""
-      - "&5      ╭─────────────── &fIPDynamic 2.5-OMEGA &5───────────────╮"
-      - "&5      │                                                   "
-      - "&5      │  &e➣ &fVersion: &a2.5-OMEGA                       "
-      - "&5      │  &e➣ &fAuthor: &aSrCodex                           "
-      - "&5      │  &e➣ &fServer: &a{server_version}                           "
-      - "&5      │  &e➣ &fJava: &a{java_version}                          "
-      - "&5      │  &e➣ &fStatus: &a✅ Working correctly    "
-      - "&5      │                                                   "
-      - "&5      ╰───────────────────────────────────────────────────╯"
+      - "           &5&lIPDynamic 2.5-OMEGA"
+      - ""
+      - "        &e➣ &fVersion: &a2.5-OMEGA"
+      - "        &e➣ &fAuthor: &aSrCodex"
+      - "        &e➣ &fServer: &a{server_version}"
+      - "        &e➣ &fJava: &a{java_version}"
+      - "        &e➣ &fStatus: &a✅ Working correctly"
       - ""
 
 
   whitelist:
     header:
       - ""
-      - "&a      ╭──────────────── &fIPDynamic Whitelist &a─────────────────╮"
-      - "&a      │                                                   "
+      - "          &a&lIPDynamic Whitelist"
+      - ""
     player-count:
-      - "&a      │  &e➣ &fPlayers: &e{count}                               "
-      - "&a      │                                                   "
-    player-entry: "&a      │  &e• &f{player}                                        "
+      - "        &e➣ &fPlayers: &e{count}"
+      - ""
+    player-entry: "        &e• &f{player}"
     no-players:
-      - "&a      │  &7➜ No players in the whitelist                  "
+      - "        &7No players in the whitelist"
     description:
-      - "&a      │                                                   "
-      - "&a      │  &7Whitelisted players can connect                 "
-      - "&a      │  &7even if their IP is banned with OP1/OP2        "
+      - ""
+      - "        &7Whitelisted players can connect"
+      - "        &7even if their IP is banned with OP1/OP2"
     footer:
-      - "&a      │                                                   "
-      - "&a      ╰───────────────────────────────────────────────────╯"
       - ""
 
 

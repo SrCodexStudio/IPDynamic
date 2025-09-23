@@ -326,121 +326,109 @@ menus:
   help:
     lines:
       - ""
-      - "&b      ╭─────────────── &fIPDynamic 2.5-OMEGA &b───────────────╮"
-      - "&b      │                                                   "
-      - "&b      │  &e• &f/ipdy help           &7➜  &aMostrar este menú      "
-      - "&b      │  &e• &f/ipdy alts &6<jugador> &7➜  &aVer cuentas alternas   "
-      - "&b      │  &e• &f/ipdy info &6<jugador> &7➜  &aInformación detallada  "
-      - "&b      │  &e• &f/ipdy ban op1 &6<ip>   &7➜  &aBanear rango /24       "
-      - "&b      │  &e• &f/ipdy ban op2 &6<ip>   &7➜  &aBanear rango /16       "
-      - "&b      │  &e• &f/ipdy unban &6<tipo>   &7➜  &aRemover baneo          "
-      - "&b      │  &e• &f/ipdy whitelist &6<cmd> &7➜  &aGestionar whitelist    "
-      - "&b      │  &e• &f/ipdy stats          &7➜  &aVer estadísticas      "
-      - "&b      │  &e• &f/ipdy reload         &7➜  &aRecargar plugin        "
-      - "&b      │  &e• &f/ipdy version        &7➜  &aInformación de versión "
-      - "&b      │                                                   "
-      - "&b      ╰───────────────────────────────────────────────────╯"
+      - "                &b&lIPDynamic 2.5-OMEGA"
+      - ""
+      - "        &e• &f/ipdy help           &7➜  &aMostrar este menú"
+      - "        &e• &f/ipdy alts &6<jugador> &7➜  &aVer cuentas alternas"
+      - "        &e• &f/ipdy info &6<jugador> &7➜  &aInformación detallada"
+      - "        &e• &f/ipdy ban op1 &6<ip>   &7➜  &aBanear rango /24"
+      - "        &e• &f/ipdy ban op2 &6<ip>   &7➜  &aBanear rango /16"
+      - "        &e• &f/ipdy unban &6<tipo>   &7➜  &aRemover baneo"
+      - "        &e• &f/ipdy whitelist &6<cmd> &7➜  &aGestionar whitelist"
+      - "        &e• &f/ipdy stats          &7➜  &aVer estadísticas"
+      - "        &e• &f/ipdy reload         &7➜  &aRecargar plugin"
+      - "        &e• &f/ipdy version        &7➜  &aInformación de versión"
       - ""
 
 
   alts:
     header:
       - ""
-      - "&c      ╭────────────── &fCuentas Alternativas &c───────────────╮"
-      - "&c      │                                                   "
+      - "              &c&lCuentas Alternativas"
+      - ""
     player-info:
-      - "&c      │  &e➣ &fJugador: &a{player}                               "
-      - "&c      │  &e➣ &fConexiones: &e{connections} &7• &fÚltima: &e{last}          "
-      - "&c      │                                                   "
-    alt-entry: "&c      │  &e• &f{name}     &7➜  &e{connections} conexiones  &7IP: {ip} "
-    no-alts: "&c      │  &7➜ No se encontraron cuentas alternativas        "
-    total: "&c      │  &7➜ Total de alts encontradas: &e{count}                  "
+      - "        &e➣ &fJugador: &a{player}"
+      - "        &e➣ &fConexiones: &e{connections} &7• &fÚltima: &e{last}"
+      - ""
+    alt-entry: "        &e• &f{name} &7➜ &e{connections} conexiones &7IP: {ip}"
+    no-alts: "        &7No se encontraron cuentas alternativas"
+    total: "        &7Total de alts encontradas: &e{count}"
     footer:
-      - "&c      │                                                   "
-      - "&c      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
   info:
     header:
       - ""
-      - "&9      ╭──────────── &fInformación del Jugador &9─────────────╮"
-      - "&9      │                                                   "
+      - "           &9&lInformación del Jugador"
+      - ""
     player-data:
-      - "&9      │  &e➣ &fJugador: &a{player}                               "
-      - "&9      │  &e➣ &fUUID: &7{uuid}    "
-      - "&9      │  &e➣ &fConexiones Totales: &e{connections}                       "
-      - "&9      │  &e➣ &fPrimera Conexión: &e{first_join}            "
-      - "&9      │  &e➣ &fÚltima Conexión: &e{last_join}             "
-      - "&9      │  &e➣ &fIP Actual: &e{current_ip}                      "
-      - "&9      │  &e➣ &fPaís: &e{country} {flag}                              "
-      - "&9      │  &e➣ &fEs Admin: {admin_status}                                "
-      - "&9      │                                                   "
-      - "&9      │  &e• &fHistorial de IPs: &e{ip_count} direcciones               "
-      - "&9      │  &e• &fCuentas Alternas: &e{alt_count} detectadas                "
+      - "        &e➣ &fJugador: &a{player}"
+      - "        &e➣ &fUUID: &7{uuid}"
+      - "        &e➣ &fConexiones Totales: &e{connections}"
+      - "        &e➣ &fPrimera Conexión: &e{first_join}"
+      - "        &e➣ &fÚltima Conexión: &e{last_join}"
+      - "        &e➣ &fIP Actual: &e{current_ip}"
+      - "        &e➣ &fPaís: &e{country} {flag}"
+      - "        &e➣ &fEs Admin: {admin_status}"
+      - ""
+      - "        &e• &fHistorial de IPs: &e{ip_count} direcciones"
+      - "        &e• &fCuentas Alternas: &e{alt_count} detectadas"
     footer:
-      - "&9      │                                                   "
-      - "&9      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
   stats:
     header:
       - ""
-      - "&d      ╭─────────────── &fEstadísticas IPDynamic &d───────────────╮"
-      - "&d      │                                                   "
+      - "           &d&lEstadísticas IPDynamic"
+      - ""
     data-section:
-      - "&d      │  &e➣ &fJugadores Registrados: &a{total_players}                    "
-      - "&d      │  &e➣ &fIPs Únicas: &a{unique_ips}                           "
-      - "&d      │  &e➣ &fConexiones Activas: &a{active_connections}                     "
-      - "&d      │  &e➣ &fHistorial de Conexiones: &a{connection_history}                "
-      - "&d      │  &e➣ &fLogins de Admins: &a{admin_logins}                      "
-      - "&d      │  &e➣ &fAlts Detectadas: &a{detected_alts}                        "
-      - "&d      │                                                   "
+      - "        &e➣ &fJugadores Registrados: &a{total_players}"
+      - "        &e➣ &fIPs Únicas: &a{unique_ips}"
+      - "        &e➣ &fConexiones Activas: &a{active_connections}"
+      - "        &e➣ &fHistorial de Conexiones: &a{connection_history}"
+      - "        &e➣ &fLogins de Admins: &a{admin_logins}"
+      - "        &e➣ &fAlts Detectadas: &a{detected_alts}"
+      - ""
     ban-section:
-      - "&d      │  &e• &fBans Individuales: &e{single_bans}                       "
-      - "&d      │  &e• &fBans OP1: &e{op1_bans}                             "
-      - "&d      │  &e• &fBans OP2: &e{op2_bans}                             "
-      - "&d      │  &e• &fBans Pendientes: &e{pending_bans}                      "
+      - "        &e• &fBans Individuales: &e{single_bans}"
+      - "        &e• &fBans OP1: &e{op1_bans}"
+      - "        &e• &fBans OP2: &e{op2_bans}"
+      - "        &e• &fBans Pendientes: &e{pending_bans}"
     footer:
-      - "&d      │                                                   "
-      - "&d      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
   version:
     lines:
       - ""
-      - "&5      ╭─────────────── &fIPDynamic 2.5-OMEGA &5───────────────╮"
-      - "&5      │                                                   "
-      - "&5      │  &e➣ &fVersión: &a2.5-OMEGA                      "
-      - "&5      │  &e➣ &fAutor: &aSrCodex                          "
-      - "&5      │  &e➣ &fServidor: &a{server_version}                          "
-      - "&5      │  &e➣ &fJava: &a{java_version}                         "
-      - "&5      │  &e➣ &fEstado: &a✅ Funcionando correctamente   "
-      - "&5      │                                                   "
-      - "&5      ╰───────────────────────────────────────────────────╯"
+      - "           &5&lIPDynamic 2.5-OMEGA"
+      - ""
+      - "        &e➣ &fVersión: &a2.5-OMEGA"
+      - "        &e➣ &fAutor: &aSrCodex"
+      - "        &e➣ &fServidor: &a{server_version}"
+      - "        &e➣ &fJava: &a{java_version}"
+      - "        &e➣ &fEstado: &a✅ Funcionando correctamente"
       - ""
 
 
   whitelist:
     header:
       - ""
-      - "&a      ╭──────────────── &fWhitelist de IPDynamic &a────────────────╮"
-      - "&a      │                                                   "
+      - "          &a&lWhitelist de IPDynamic"
+      - ""
     player-count:
-      - "&a      │  &e➣ &fJugadores: &e{count}                              "
-      - "&a      │                                                   "
-    player-entry: "&a      │  &e• &f{player}                                        "
+      - "        &e➣ &fJugadores: &e{count}"
+      - ""
+    player-entry: "        &e• &f{player}"
     no-players:
-      - "&a      │  &7➜ No hay jugadores en la whitelist             "
+      - "        &7No hay jugadores en la whitelist"
     description:
-      - "&a      │                                                   "
-      - "&a      │  &7Los jugadores en whitelist pueden conectarse    "
-      - "&a      │  &7incluso si su IP está baneada con OP1/OP2       "
+      - ""
+      - "        &7Los jugadores en whitelist pueden conectarse"
+      - "        &7incluso si su IP está baneada con OP1/OP2"
     footer:
-      - "&a      │                                                   "
-      - "&a      ╰───────────────────────────────────────────────────╯"
       - ""
 
 
