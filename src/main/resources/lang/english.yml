@@ -85,6 +85,7 @@ info:
   uuid: "&7UUID: &f{uuid}"
   admin-status: "&7Status: &6⭐ Administrator"
   regular-status: "&7Status: &aNormal"
+  no-linked-accounts: "None"
 
 # ╔════════════════════════════════════════════════════════════════════════════════╗
 # ║                                STATISTICS                                     ║
@@ -177,6 +178,10 @@ errors:
   unexpected-error: "&c❌ Unexpected error: {error}"
   applying-ban: "&c❌ Error applying ban: {error}"
   applying-unban: "&c❌ Error applying unban: {error}"
+  no-pagination-state: "&c❌ No pagination information available."
+  no-more-pages: "&c❌ No more pages available."
+  no-pagination-data: "&c❌ Error getting pagination data."
+  player-only: "&c❌ This command can only be used by players."
 
 # ╔════════════════════════════════════════════════════════════════════════════════╗
 # ║                              SYSTEM MESSAGES                                  ║
@@ -350,9 +355,16 @@ menus:
       - "        &e➣ &fPlayer: &a{player}"
       - "        &e➣ &fConnections: &e{connections} &7• &fLast: &e{last}"
       - ""
-    alt-entry: "        &e• &f{name} &7➜ &e{connections} connections &7IP: {ip}"
-    no-alts: "        &7No alternate accounts found"
-    total: "        &7Total alts found: &e{count}"
+    alt-entry:
+      - "        &e• &f{name} &7➜ &e{connections} connections"
+      - "        &e• &7Alt IP ➜ &c{ip}"
+      - "        &e• &7Country ➜ &a{country}"
+      - ""
+    no-alts:
+      - "        &7No alternate accounts found"
+    total:
+      - ""
+      - "        &7Total alts found: &e{count}"
     footer:
       - ""
 
@@ -374,6 +386,24 @@ menus:
       - ""
       - "        &e• &fIP History: &e{ip_count} addresses"
       - "        &e• &fAlternate Accounts: &e{alt_count} detected"
+    ip-history:
+      - ""
+      - "        &d&l→ Connection History by IP:"
+      - ""
+    ip-entry:
+      - "        &e• &f{ip} &7(Last: {last_seen})"
+      - "        &7  Country ➜ &a{country}"
+      - "        &7  Connections ➜ &e{connections}"
+      - "        &7  Linked accounts ➜ &b{linked_accounts}"
+      - ""
+    no-ip-history:
+      - "        &7No additional IP history available"
+    pagination:
+      page-info: "        &7Page &e{current} &7of &e{total}"
+      next-page: "&a&l>> NEXT PAGE <<"
+      previous-page: "&c&l<< PREVIOUS PAGE <<"
+      next-page-hover: "&7Click to go to the next page"
+      previous-page-hover: "&7Click to go to the previous page"
     footer:
       - ""
 

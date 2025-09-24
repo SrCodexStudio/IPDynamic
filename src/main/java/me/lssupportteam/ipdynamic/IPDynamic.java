@@ -9,6 +9,7 @@ import me.lssupportteam.ipdynamic.nms.NMSVersion;
 import me.lssupportteam.ipdynamic.services.GeoIPService;
 import me.lssupportteam.ipdynamic.services.WebhookService;
 import me.lssupportteam.ipdynamic.utils.ColorUtils;
+import me.lssupportteam.ipdynamic.utils.PaginationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -34,6 +35,7 @@ public final class IPDynamic extends JavaPlugin {
     private WebhookConfigManager webhookConfigManager;
     private AddonsManager addonsManager;
     private ConfigMigrator configMigrator;
+    private PaginationManager paginationManager;
 
 
     private GeoIPService geoIPService;
@@ -149,6 +151,7 @@ public final class IPDynamic extends JavaPlugin {
         dataManager = new DataManager(this);
         banManager = new BanManager(this);
         whitelistManager = new WhitelistManager(this);
+        paginationManager = new PaginationManager();
 
 
         webhookService = new WebhookService(this);
@@ -340,6 +343,7 @@ public final class IPDynamic extends JavaPlugin {
     public LangManager getLangManager() { return langManager; }
     public WebhookConfigManager getWebhookConfigManager() { return webhookConfigManager; }
     public AddonsManager getAddonsManager() { return addonsManager; }
+    public PaginationManager getPaginationManager() { return paginationManager; }
     public GeoIPService getGeoIPService() { return geoIPService; }
     public WebhookService getWebhookService() { return webhookService; }
     public DiscordManager getDiscordManager() { return discordManager; }

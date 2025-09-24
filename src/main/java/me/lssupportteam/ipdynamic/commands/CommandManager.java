@@ -6,6 +6,8 @@ import me.lssupportteam.ipdynamic.models.BanEntry;
 import me.lssupportteam.ipdynamic.models.PlayerData;
 import me.lssupportteam.ipdynamic.utils.ColorUtils;
 import me.lssupportteam.ipdynamic.utils.IPUtils;
+import me.lssupportteam.ipdynamic.utils.PaginationManager;
+import me.lssupportteam.ipdynamic.utils.ChatComponentUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -29,7 +31,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
 
     private static final String[] COMMANDS = {
-        "help", "reload", "ban", "unban", "alts", "info", "stats", "version", "discord", "migrate", "whitelist"
+        "help", "reload", "ban", "unban", "alts", "info", "stats", "version", "discord", "migrate", "whitelist", "page"
     };
 
     private static final String[] BAN_TYPES = {
@@ -89,6 +91,9 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 break;
             case "whitelist":
                 handleWhitelist(sender, args);
+                break;
+            case "page":
+                handlePageCommand(sender, args);
                 break;
             default:
                 sendMessage(sender, plugin.getLangManager().getMessage("errors.unknown-command"));
@@ -608,25 +613,38 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         }
 
         if (alts.isEmpty()) {
-            String noAlts = plugin.getLangManager().getMessage("menus.alts.no-alts");
-            sender.sendMessage(ColorUtils.translateColor(noAlts));
+            List<String> noAltsLines = plugin.getLangManager().getMessageLines("menus.alts.no-alts");
+            for (String line : noAltsLines) {
+                sender.sendMessage(ColorUtils.translateColor(line));
+            }
         } else {
             int count = 0;
             for (PlayerData alt : alts) {
                 if (count >= 10) break;
 
-                String altEntry = plugin.getLangManager().getMessage("menus.alts.alt-entry")
-                        .replace("{name}", alt.getUsername())
-                        .replace("{connections}", String.valueOf(alt.getTotalConnections()))
-                        .replace("{ip}", alt.getLastIp().substring(0, Math.min(10, alt.getLastIp().length())) + "...");
+                // Get country info for the alt IP
+                String country = "Desconocido";
+                if (alt.getGeoLocation() != null && alt.getGeoLocation().getCountry() != null) {
+                    country = alt.getGeoLocation().getCountry();
+                }
 
-                sender.sendMessage(ColorUtils.translateColor(altEntry));
+                List<String> altEntryLines = plugin.getLangManager().getMessageLines("menus.alts.alt-entry");
+                for (String line : altEntryLines) {
+                    String processedLine = line
+                            .replace("{name}", alt.getUsername())
+                            .replace("{connections}", String.valueOf(alt.getTotalConnections()))
+                            .replace("{ip}", alt.getLastIp())
+                            .replace("{country}", country);
+                    sender.sendMessage(ColorUtils.translateColor(processedLine));
+                }
                 count++;
             }
 
-            String total = plugin.getLangManager().getMessage("menus.alts.total")
-                    .replace("{count}", String.valueOf(alts.size()));
-            sender.sendMessage(ColorUtils.translateColor(total));
+            List<String> totalLines = plugin.getLangManager().getMessageLines("menus.alts.total");
+            for (String line : totalLines) {
+                String processedLine = line.replace("{count}", String.valueOf(alts.size()));
+                sender.sendMessage(ColorUtils.translateColor(processedLine));
+            }
         }
 
         // Send footer
@@ -670,10 +688,78 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             sender.sendMessage(ColorUtils.translateColor(processedLine));
         }
 
-        // Send footer
-        List<String> footerLines = plugin.getLangManager().getMessageLines("menus.info.footer");
-        for (String line : footerLines) {
+        // Send IP history section
+        List<String> ipHistoryLines = plugin.getLangManager().getMessageLines("menus.info.ip-history");
+        for (String line : ipHistoryLines) {
             sender.sendMessage(ColorUtils.translateColor(line));
+        }
+
+        // Get connection statistics by IP (excluding current IP)
+        Map<String, Integer> ipConnectionStats = plugin.getDataManager().getConnectionStatsByIP(playerData.getUuid());
+        Map<String, Integer> ipHistoryFiltered = new HashMap<>();
+
+        // Filter out current IP from history
+        for (String ip : playerData.getIpHistory()) {
+            if (!ip.equals(playerData.getLastIp())) {
+                ipHistoryFiltered.put(ip, ipConnectionStats.getOrDefault(ip, 1));
+            }
+        }
+
+        if (ipHistoryFiltered.size() > 0) {
+            // Check if sender is a player and if there are many IPs (for pagination)
+            if (sender instanceof Player && ipHistoryFiltered.size() > 5) {
+                Player player = (Player) sender;
+
+                // Create pagination state
+                plugin.getPaginationManager().createPaginationState(player, playerData.getUsername(), ipHistoryFiltered);
+
+                // Show first page
+                showIPHistoryPage(player, playerData.getUsername());
+            } else {
+                // Show all IPs without pagination (console or few IPs)
+                for (Map.Entry<String, Integer> entry : ipHistoryFiltered.entrySet()) {
+                    String ip = entry.getKey();
+                    int connections = entry.getValue();
+
+                    // Get linked accounts for this IP
+                    List<String> linkedAccounts = plugin.getDataManager().getUsernamesLinkedToIP(ip);
+                    // Remove current player from linked accounts list
+                    linkedAccounts.removeIf(username -> username.equalsIgnoreCase(playerData.getUsername()));
+                    String linkedAccountsStr = linkedAccounts.isEmpty() ?
+                        plugin.getLangManager().getMessage("info.no-linked-accounts") :
+                        String.join(", ", linkedAccounts);
+
+                    // Get country and display IP entry
+                    if (plugin.getGeoIPService() != null) {
+                        plugin.getGeoIPService().getLocation(ip).thenAccept(geoLocation -> {
+                            String geoCountry = "Desconocido";
+                            if (geoLocation != null && geoLocation.getCountry() != null) {
+                                geoCountry = geoLocation.getCountry();
+                            }
+
+                            displayIPEntry(sender, ip, playerData, geoCountry, connections, linkedAccountsStr);
+                        }).exceptionally(throwable -> {
+                            displayIPEntry(sender, ip, playerData, "Desconocido", connections, linkedAccountsStr);
+                            return null;
+                        });
+                    } else {
+                        displayIPEntry(sender, ip, playerData, "Desconocido", connections, linkedAccountsStr);
+                    }
+                }
+            }
+        } else {
+            List<String> noIpHistoryLines = plugin.getLangManager().getMessageLines("menus.info.no-ip-history");
+            for (String line : noIpHistoryLines) {
+                sender.sendMessage(ColorUtils.translateColor(line));
+            }
+        }
+
+        // Send footer only if not using pagination
+        if (!(sender instanceof Player) || ipHistoryFiltered.size() <= 5) {
+            List<String> footerLines = plugin.getLangManager().getMessageLines("menus.info.footer");
+            for (String line : footerLines) {
+                sender.sendMessage(ColorUtils.translateColor(line));
+            }
         }
     }
 
@@ -785,6 +871,8 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 StringUtil.copyPartialMatches(args[1], Arrays.asList("status", "stats"), completions);
             } else if (subCommand.equals("whitelist")) {
                 StringUtil.copyPartialMatches(args[1], Arrays.asList("add", "remove", "list"), completions);
+            } else if (subCommand.equals("page")) {
+                StringUtil.copyPartialMatches(args[1], Arrays.asList("next", "prev", "previous"), completions);
             }
         } else if (args.length == 3) {
             String subCommand = args[0].toLowerCase();
@@ -804,10 +892,135 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                     Set<String> whitelistedPlayers = plugin.getWhitelistManager().getAllWhitelistedPlayers();
                     StringUtil.copyPartialMatches(args[2], whitelistedPlayers, completions);
                 }
+            } else if (subCommand.equals("page")) {
+                // For page command, suggest online players
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (sender.hasPermission("ipdynamic.see.all") ||
+                        (sender instanceof Player && ((Player) sender).canSee(player))) {
+                        completions.add(player.getName());
+                    }
+                }
             }
         }
 
         Collections.sort(completions);
         return completions;
+    }
+
+    private void handlePageCommand(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sendMessage(sender, plugin.getLangManager().getMessage("errors.player-only"));
+            return;
+        }
+
+        Player player = (Player) sender;
+        PaginationManager paginationManager = plugin.getPaginationManager();
+
+        if (args.length < 3) {
+            sendMessage(sender, plugin.getLangManager().getMessage("errors.usage") + " /ipdy page [next|prev] [player]");
+            return;
+        }
+
+        String direction = args[1].toLowerCase();
+        String targetPlayer = args[2];
+
+        if (!paginationManager.hasState(player.getUniqueId())) {
+            sendMessage(sender, plugin.getLangManager().getMessage("errors.no-pagination-state"));
+            return;
+        }
+
+        boolean success = false;
+        if ("next".equals(direction)) {
+            success = paginationManager.nextPage(player.getUniqueId());
+        } else if ("prev".equals(direction) || "previous".equals(direction)) {
+            success = paginationManager.previousPage(player.getUniqueId());
+        }
+
+        if (success) {
+            // Show the updated page
+            showIPHistoryPage(player, targetPlayer);
+        } else {
+            sendMessage(sender, plugin.getLangManager().getMessage("errors.no-more-pages"));
+        }
+    }
+
+    private void showIPHistoryPage(Player player, String targetPlayerName) {
+        PaginationManager.PaginationData pageData = plugin.getPaginationManager().getCurrentPage(player.getUniqueId());
+
+        if (pageData == null) {
+            sendMessage(player, plugin.getLangManager().getMessage("errors.no-pagination-data"));
+            return;
+        }
+
+        // Get player data for the target
+        PlayerData playerData = plugin.getDataManager().getPlayerData(targetPlayerName);
+        if (playerData == null) {
+            sendMessage(player, plugin.getLangManager().getMessage("errors.player-not-found").replace("{player}", targetPlayerName));
+            return;
+        }
+
+        // Send page information
+        String pageInfo = plugin.getLangManager().getMessage("menus.info.pagination.page-info")
+                .replace("{current}", String.valueOf(pageData.getCurrentPage()))
+                .replace("{total}", String.valueOf(pageData.getTotalPages()));
+        player.sendMessage(ColorUtils.translateColor(pageInfo));
+
+        // Show IPs for this page
+        for (Map.Entry<String, Integer> entry : pageData.getPageIps().entrySet()) {
+            String ip = entry.getKey();
+            int connections = entry.getValue();
+
+            // Get linked accounts for this IP
+            List<String> linkedAccounts = plugin.getDataManager().getUsernamesLinkedToIP(ip);
+            // Remove current player from linked accounts list
+            linkedAccounts.removeIf(username -> username.equalsIgnoreCase(targetPlayerName));
+            String linkedAccountsStr = linkedAccounts.isEmpty() ?
+                plugin.getLangManager().getMessage("info.no-linked-accounts") :
+                String.join(", ", linkedAccounts);
+
+            // Get country and display IP entry
+            if (plugin.getGeoIPService() != null) {
+                plugin.getGeoIPService().getLocation(ip).thenAccept(geoLocation -> {
+                    String country = "Desconocido";
+                    if (geoLocation != null && geoLocation.getCountry() != null) {
+                        country = geoLocation.getCountry();
+                    }
+
+                    displayIPEntry(player, ip, playerData, country, connections, linkedAccountsStr);
+                }).exceptionally(throwable -> {
+                    displayIPEntry(player, ip, playerData, "Desconocido", connections, linkedAccountsStr);
+                    return null;
+                });
+            } else {
+                displayIPEntry(player, ip, playerData, "Desconocido", connections, linkedAccountsStr);
+            }
+        }
+
+        // Show pagination controls
+        String nextText = plugin.getLangManager().getMessage("menus.info.pagination.next-page");
+        String prevText = plugin.getLangManager().getMessage("menus.info.pagination.previous-page");
+        String nextHover = plugin.getLangManager().getMessage("menus.info.pagination.next-page-hover");
+        String prevHover = plugin.getLangManager().getMessage("menus.info.pagination.previous-page-hover");
+
+        ChatComponentUtils.sendPaginationMessage(player, "",
+                pageData.hasNext(), pageData.hasPrevious(),
+                nextText, nextHover, prevText, prevHover, targetPlayerName);
+    }
+
+    /**
+     * Helper method to display IP entry information
+     */
+    private void displayIPEntry(CommandSender sender, String ip, PlayerData playerData,
+                               String country, int connections, String linkedAccounts) {
+        List<String> ipEntryLines = plugin.getLangManager().getMessageLines("menus.info.ip-entry");
+        for (String line : ipEntryLines) {
+            String processedLine = line
+                    .replace("{ip}", ip)
+                    .replace("{last_seen}", dateFormat.format(new Date(playerData.getIpFirstSeen(ip))))
+                    .replace("{country}", country)
+                    .replace("{connections}", String.valueOf(connections))
+                    .replace("{linked_accounts}", linkedAccounts);
+            sender.sendMessage(ColorUtils.translateColor(processedLine));
+        }
     }
 }

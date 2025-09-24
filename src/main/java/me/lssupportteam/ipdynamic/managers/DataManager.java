@@ -252,19 +252,33 @@ public class DataManager {
             .collect(Collectors.toList());
 
         if (!alts.isEmpty()) {
-
+            // Update cache for current player
             altAccountsCache.put(playerUuid.toString(), alts);
 
-
+            // Update bidirectional linking
             PlayerData playerData = playerDataMap.get(playerUuid);
             if (playerData != null) {
                 for (UUID altUuid : alts) {
                     playerData.addLinkedAccount(altUuid.toString());
 
-
+                    // Update the alt account's data
                     PlayerData altData = playerDataMap.get(altUuid);
                     if (altData != null) {
                         altData.addLinkedAccount(playerUuid.toString());
+
+                        // IMPORTANT: Update the alt's cache to include this new connection
+                        List<UUID> existingAltsForAlt = altAccountsCache.getOrDefault(altUuid.toString(), new ArrayList<>());
+                        if (!existingAltsForAlt.contains(playerUuid)) {
+                            existingAltsForAlt.add(playerUuid);
+
+                            // Add all other alts that the current player has
+                            for (UUID otherAlt : alts) {
+                                if (!otherAlt.equals(altUuid) && !existingAltsForAlt.contains(otherAlt)) {
+                                    existingAltsForAlt.add(otherAlt);
+                                }
+                            }
+                            altAccountsCache.put(altUuid.toString(), existingAltsForAlt);
+                        }
                     }
                 }
             }
@@ -324,6 +338,24 @@ public class DataManager {
         return player != null ? getPlayerData(player.getUniqueId()) : null;
     }
 
+    /**
+     * Gets all usernames linked to a specific IP address
+     */
+    public List<String> getUsernamesLinkedToIP(String ip) {
+        if (!IPUtils.isValidIpAddress(ip)) return Collections.emptyList();
+
+        Set<UUID> playersWithIp = ipToPlayersMap.get(ip);
+        if (playersWithIp == null || playersWithIp.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return playersWithIp.stream()
+            .map(playerDataMap::get)
+            .filter(Objects::nonNull)
+            .map(PlayerData::getUsername)
+            .collect(Collectors.toList());
+    }
+
 
     private void fetchGeoLocation(PlayerData data, String ip) {
         if (plugin.getGeoIPService() == null || IPUtils.isLocalIp(ip)) {
@@ -380,6 +412,31 @@ public class DataManager {
 
     public Collection<PlayerData> getAllPlayers() {
         return new ArrayList<>(playerDataMap.values());
+    }
+
+    /**
+     * Gets connection count for a specific player and IP combination
+     */
+    public int getConnectionCountForIP(UUID playerUuid, String ip) {
+        return (int) connectionHistory.stream()
+                .filter(log -> log.type == ConnectionLog.Type.CONNECT)
+                .filter(log -> log.uuid.equals(playerUuid))
+                .filter(log -> log.ip.equals(ip))
+                .count();
+    }
+
+    /**
+     * Gets connection history statistics by IP for a specific player
+     */
+    public Map<String, Integer> getConnectionStatsByIP(UUID playerUuid) {
+        Map<String, Integer> ipConnectionCount = new HashMap<>();
+
+        connectionHistory.stream()
+                .filter(log -> log.type == ConnectionLog.Type.CONNECT)
+                .filter(log -> log.uuid.equals(playerUuid))
+                .forEach(log -> ipConnectionCount.merge(log.ip, 1, Integer::sum));
+
+        return ipConnectionCount;
     }
 
 
